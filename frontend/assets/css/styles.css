@@ -30,7 +30,7 @@
   --gold-dark: #b8860b;
   --font: 'Outfit', 'Inter', sans-serif;
   --font-size-base: 16px;
-  --header-height: 80px;
+  --header-height: 65px;
 }
 
 
@@ -223,7 +223,7 @@ header {
   display: grid;
   place-items: center;
   text-align: center;
-  padding: 3rem 1rem;
+  padding: 2rem 1rem;
   color: #fff;
   background: linear-gradient(135deg, var(--green-dark), var(--green-medium));
   position: relative;
@@ -239,7 +239,7 @@ header.compact {
 header.compact .nav {
   position: relative;
   inset: 0;
-  padding: 1.2rem 5%;
+  padding: 0.85rem 5%;
 }
 
 
