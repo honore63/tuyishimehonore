@@ -3591,7 +3591,12 @@ body.high-contrast .fact-value {
 
 @media (max-width: 576px) {
   .footer-grid-4 {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem 1rem;
+  }
+  .footer-grid-4 .footer-col:nth-child(1),
+  .footer-grid-4 .footer-col:nth-child(4) {
+    grid-column: 1 / -1;
   }
 }/* Screen Reader Focus */
 .reading-focus {
