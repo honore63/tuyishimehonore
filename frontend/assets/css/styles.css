@@ -30,7 +30,7 @@
   --gold-dark: #b8860b;
   --font: 'Outfit', 'Inter', sans-serif;
   --font-size-base: 16px;
-  --header-height: 65px;
+  --header-height: 80px;
 }
 
 
@@ -223,7 +223,7 @@ header {
   display: grid;
   place-items: center;
   text-align: center;
-  padding: 2rem 1rem;
+  padding: 3rem 1rem;
   color: #fff;
   background: linear-gradient(135deg, var(--green-dark), var(--green-medium));
   position: relative;
@@ -239,7 +239,7 @@ header.compact {
 header.compact .nav {
   position: relative;
   inset: 0;
-  padding: 0.85rem 5%;
+  padding: 1.2rem 5%;
 }
 
 
@@ -390,6 +390,21 @@ header::after {
 
 /* Mobile Adjustments for Nav */
 @media (max-width: 900px) {
+  :root {
+    --header-height: 60px !important;
+  }
+  
+  /* Drastically reduce header padding only on phones */
+  header {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+    min-height: auto !important;
+  }
+
+  header.compact .nav {
+    padding: 0.7rem 5% !important;
+  }
+
   .nav {
     padding: 1rem 5%;
     background: var(--green-dark);
@@ -439,7 +454,7 @@ header::after {
     transform: translateX(100%);
     opacity: 0;
     z-index: 5000; /* Extremely high to ensure clickability */
-    padding: 2rem 1rem;
+    padding: 3rem 1rem;
     overflow-y: auto;
     pointer-events: none; /* Block clicks when hidden */
   }
@@ -2763,6 +2778,21 @@ body.home .floating-avatar {
 
 /* Response for Profile Card */
 @media (max-width: 900px) {
+  :root {
+    --header-height: 60px !important;
+  }
+  
+  /* Drastically reduce header padding only on phones */
+  header {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+    min-height: auto !important;
+  }
+
+  header.compact .nav {
+    padding: 0.7rem 5% !important;
+  }
+
   .profile-card {
     grid-template-columns: 1fr;
     margin: 2rem auto;
@@ -3318,6 +3348,21 @@ body.high-contrast .fact-value {
 
 
 @media (max-width: 900px) {
+  :root {
+    --header-height: 60px !important;
+  }
+  
+  /* Drastically reduce header padding only on phones */
+  header {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+    min-height: auto !important;
+  }
+
+  header.compact .nav {
+    padding: 0.7rem 5% !important;
+  }
+
   
 }
 
@@ -3629,6 +3674,21 @@ header.compact .nav-toggle span {
 
 /* Ensure mobile menu still looks good when opened from compact header */
 @media (max-width: 900px) {
+  :root {
+    --header-height: 60px !important;
+  }
+  
+  /* Drastically reduce header padding only on phones */
+  header {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+    min-height: auto !important;
+  }
+
+  header.compact .nav {
+    padding: 0.7rem 5% !important;
+  }
+
   header.compact .nav-links {
     background: #ffffff !important;
   }
