@@ -3418,7 +3418,7 @@ body.high-contrast .fact-value {
   color: #f8fafc;
   padding: 5rem 0 2rem;
   margin-top: 5rem;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font);
 }
 
 .footer-grid-4 {
@@ -3454,7 +3454,7 @@ body.high-contrast .fact-value {
   color: #fff;
   margin: 0 0 2px 0;
   font-weight: 700;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font);
   letter-spacing: 0.5px;
 }
 
@@ -3502,7 +3502,7 @@ body.high-contrast .fact-value {
   color: #fff;
   margin-bottom: 1.8rem;
   font-weight: 600;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font);
 }
 
 .clean-links {
