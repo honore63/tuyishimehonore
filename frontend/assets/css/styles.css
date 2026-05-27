@@ -3605,3 +3605,34 @@ body.high-contrast .fact-value {
   background-color: rgba(234, 179, 8, 0.1);
   transition: all 0.2s ease;
 }
+/* === WHITE HEADER FOR SUBPAGES (Compact Header) === */
+header.compact {
+  background: #ffffff !important;
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+header.compact .nav a {
+  color: var(--green-dark) !important;
+}
+
+header.compact .nav a:hover,
+header.compact .nav a:focus-visible {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--brand-orange) !important;
+}
+
+header.compact .nav-brand .white {
+  color: var(--green-dark) !important;
+}
+
+header.compact .nav-toggle span {
+  background: var(--green-dark) !important;
+}
+
+/* Ensure mobile menu still looks good when opened from compact header */
+@media (max-width: 900px) {
+  header.compact .nav-links {
+    background: #ffffff !important;
+  }
+}
