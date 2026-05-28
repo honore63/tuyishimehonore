@@ -123,16 +123,16 @@ h4 { font-size: 1.071rem; } /* 15px / 14px */
 }
 
 body.home .nav {
-  background: transparent;
-  box-shadow: none;
-  border-bottom: none;
-  backdrop-filter: none;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-bottom: none !important;
+  backdrop-filter: none !important;
 }
 
-body.home .nav-links a { color: var(--white); text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-body.home .nav-brand .white { color: var(--white); text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-body.home .nav-links a.active { background: rgba(255,255,255,0.2); border-radius: 12px; }
-body.home .nav-toggle span { background: var(--white); }
+body.home .nav-links a { color: var(--white) !important; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+body.home .nav-brand .white { color: var(--white) !important; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+body.home .nav-links a.active { background: rgba(255,255,255,0.2) !important; border-radius: 12px; }
+body.home .nav-toggle span { background: var(--white) !important; }
 
 .nav-brand {
   font-size: 1.3rem;
@@ -196,13 +196,13 @@ body.home .nav-toggle span { background: var(--white); }
 body.home header {
   min-height: 110vh;
   position: relative;
-  background: url('../images/Images/WhatsApp Image 2026-03-10 at 12.18.51 PM (1).jpeg') center top/cover no-repeat;
+  background: url('../images/hero-bg.jpg') center top/cover no-repeat;
   background-attachment: scroll;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   text-align: center;
-  padding-top: 45vh; /* Pull content down to below the face */
+  padding-top: 45vh;
 }
 
 body.home header::before {
