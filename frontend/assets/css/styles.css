@@ -119,7 +119,18 @@ h4 { font-size: 1.071rem; } /* 15px / 14px */
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
 }
+
+body.home .nav {
+  background: rgba(6, 78, 59, 0.7);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+body.home .nav-links a { color: var(--white); }
+body.home .nav-brand .white { color: var(--white); }
+body.home .nav-links a.active { background: rgba(255,255,255,0.1); color: var(--brand-cyan); }
+body.home .nav-toggle span { background: var(--white); }
 
 .nav-brand {
   font-size: 1.3rem;
@@ -183,7 +194,7 @@ h4 { font-size: 1.071rem; } /* 15px / 14px */
 body.home header {
   min-height: 100vh;
   position: relative;
-  background: url('../images/Images/WhatsApp Image 2026-03-10 at 12.18.51 PM (1).jpeg') center/cover no-repeat;
+  background: url('../images/Images/WhatsApp Image 2026-03-10 at 12.18.51 PM (1).jpeg') center 10%/cover no-repeat;
   background-attachment: scroll;
   display: flex;
   align-items: center;
