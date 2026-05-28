@@ -9,9 +9,10 @@
     
   <link rel="icon" type="image/jpeg" href="assets/images/profile.jpg" />
 
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#064e3b" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#064e3b">
 </head>
 <body class="home">
   <header>
@@ -222,15 +223,7 @@
       </div>
     </div>
   </div>
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
-          .then(reg => console.log('Service Worker Registered'))
-          .catch(err => console.log('Service Worker Failed'));
-      });
-    }
-  </script>
+  
   <!-- Custom PWA Install Prompt -->
   <div id="pwa-install-banner" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; background: var(--green-dark); color: white; padding: 1.5rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 9999; align-items: center; justify-content: space-between; border: 1px solid var(--green-medium); animation: slideUp 0.5s ease-out;">
     <div style="display: flex; align-items: center; gap: 1rem;">
@@ -296,3 +289,6 @@
   </script>
 </body>
 </html>
+
+
+

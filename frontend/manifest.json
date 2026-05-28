@@ -2,7 +2,7 @@
   "name": "Tuyishime Honore Portfolio",
   "short_name": "Honore",
   "description": "Professional Portfolio of Tuyishime Honore - Educator & Innovator",
-  "start_url": "/frontend/index.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#064e3b",
   "theme_color": "#064e3b",

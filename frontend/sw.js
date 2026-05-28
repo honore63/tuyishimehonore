@@ -1,9 +1,10 @@
 const CACHE_NAME = 'honore-portfolio-v1';
 const ASSETS_TO_CACHE = [
-  '/frontend/index.html',
-  '/frontend/assets/css/styles.css',
-  '/frontend/assets/images/profile.jpg',
-  '/frontend/assets/images/favicon-circle.png'
+  './index.html',
+  './assets/css/styles.css',
+  './assets/js/script.js',
+  './assets/images/profile.jpg',
+  './assets/images/favicon-circle.png'
 ];
 
 self.addEventListener('install', (event) => {
@@ -15,6 +16,14 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request).catch(() => {
+        return caches.match('./index.html');
+      })
+    );
+    return;
+  }
   event.respondWith(
     caches.match(event.request).then((response) => {
       return response || fetch(event.request);

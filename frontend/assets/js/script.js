@@ -1,4 +1,4 @@
-﻿const videos = [
+const videos = [
   { id: 'yvzLHXqcanQ' },
   { id: 'glsbQJfo4T8' },
   { id: '8_UyFSrQblc' },
@@ -72,6 +72,13 @@ if (window.honoreChatInitialized) {
 }
 
 function initChatSystem() {
+  // 📱 Register Service Worker for Mobile App (PWA)
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => console.log('🚀 Service Worker: Registered'))
+      .catch(err => console.log('❌ Service Worker: Failed', err));
+  }
+
   // Initialize video functionality only if elements exist
   initVideos();
 
