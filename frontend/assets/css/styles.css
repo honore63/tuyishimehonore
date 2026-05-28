@@ -196,7 +196,7 @@ body.home .nav-toggle span { background: var(--white) !important; }
 body.home header {
   min-height: 110vh;
   position: relative;
-  background: url('../images/hero-bg.jpg') center top/cover no-repeat;
+  background: url('../images/profile.jpg') center top/cover no-repeat;
   background-attachment: scroll;
   display: flex;
   align-items: flex-start;
