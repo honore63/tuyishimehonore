@@ -39,7 +39,7 @@
 
 html {
   scroll-behavior: smooth;
-  font-size: 12px;
+  font-size: 14px;
   overflow-x: hidden;
 }
 
@@ -83,10 +83,10 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--green-dark);
 }
 
-h1 { font-size: 1.166rem; } /* 14px / 12px */
-h2 { font-size: 1.166rem; }
-h3 { font-size: 1.166rem; }
-h4 { font-size: 1.083rem; } /* 13px / 12px */
+h1 { font-size: 1.143rem; } /* 16px / 14px */
+h2 { font-size: 1.143rem; }
+h3 { font-size: 1.143rem; }
+h4 { font-size: 1.071rem; } /* 15px / 14px */
 
 .section-title {
   text-align: center;
@@ -99,7 +99,7 @@ h4 { font-size: 1.083rem; } /* 13px / 12px */
   color: var(--muted);
   max-width: 700px;
   margin: -2.5rem auto 3rem;
-  font-size: 1.083rem; /* 13px */
+  font-size: 1.071rem; /* 15px */
 }
 
 /* === Navigation === */
@@ -481,7 +481,7 @@ header.compact {
   justify-content: center;
 }
 
-.profile-name { font-size: 1.166rem; margin-bottom: 0.5rem; }
+.profile-name { font-size: 1.143rem; margin-bottom: 0.5rem; }
 .profile-job { 
   font-size: 1rem; 
   color: var(--muted); 
