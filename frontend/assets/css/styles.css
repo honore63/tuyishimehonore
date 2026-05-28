@@ -857,7 +857,14 @@ header.compact {
 
 /* === Media Queries === */
 @media (max-width: 1024px) {
-  .footer-grid-4 { grid-template-columns: 1fr 1fr; }
+  .footer-grid-4 { 
+    grid-template-columns: 1fr 1fr; 
+    gap: 2rem;
+  }
+  .footer-grid-4 .footer-col:first-child { 
+    grid-column: 1 / -1; 
+    margin-bottom: 2rem;
+  }
   .profile-card { grid-template-columns: 320px 1fr; }
 }
 
@@ -886,11 +893,14 @@ header.compact {
 @media (max-width: 600px) {
   .footer-grid-4 { 
     grid-template-columns: 1fr 1fr; 
-    gap: 2rem;
+    gap: 2.5rem 1.5rem;
   }
   .footer-grid-4 .footer-col:first-child,
   .footer-grid-4 .footer-col:last-child { 
     grid-column: 1 / -1; 
+  }
+  .clean-links {
+    font-size: 0.85rem;
   }
   .ai-widget { right: 1rem; bottom: 1rem; width: calc(100% - 2rem); }
 }
