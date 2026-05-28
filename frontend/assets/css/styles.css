@@ -398,25 +398,22 @@ header::after {
     --header-height: 60px !important;
   }
   
-  /* Drastically reduce header padding only on phones */
   header {
-    padding-top: 2rem !important;
-    padding-bottom: 2rem !important;
-    min-height: auto !important;
-  }
-
-  header.compact .nav {
-    padding: 0.7rem 5% !important;
+    padding-top: 4rem !important; /* Push internal header content down to stay below fixed nav */
   }
 
   .nav {
-    padding: 1rem 5%;
-    background: var(--green-dark);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    padding: 0.8rem 5% !important;
+    background: #064e3b !important; /* Solid dark green for ultimate readability */
+    z-index: 9999 !important; /* Highest possible to stay on top of everything */
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.2) !important;
   }
 
   .nav-brand {
