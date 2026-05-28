@@ -931,16 +931,16 @@ header.compact {
 /* === Accessibility Panel === */
 .accessibility-toggle {
   position: fixed;
-  bottom: 2rem;
-  left: 2rem;
-  z-index: 2000;
-  width: 50px;
-  height: 50px;
+  top: 12px;
+  right: 12px;
+  z-index: 3000;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
   background: var(--green-dark);
   color: white;
   border: none;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   cursor: pointer;
   box-shadow: 0 4px 15px rgba(0,0,0,0.3);
   display: flex !important;
@@ -950,14 +950,14 @@ header.compact {
 }
 
 .accessibility-toggle:hover {
-  transform: scale(1.1);
+  transform: scale(1.1) rotate(10deg);
   background: var(--green-medium);
 }
 
 .accessibility-panel {
   position: fixed;
-  bottom: 6rem;
-  left: 2rem;
+  top: 70px;
+  right: 12px;
   width: 320px;
   max-width: calc(100vw - 4rem);
   background: white;
