@@ -39,7 +39,7 @@
 
 html {
   scroll-behavior: smooth;
-  font-size: 16px;
+  font-size: 12px;
   overflow-x: hidden;
 }
 
@@ -47,7 +47,8 @@ body {
   font-family: var(--font);
   color: var(--text);
   background: #f8fafc;
-  line-height: 1.65;
+  line-height: 1.5;
+  font-size: 1rem;
   overflow-x: hidden;
 }
 
@@ -82,9 +83,10 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--green-dark);
 }
 
-h1 { font-size: clamp(2.2rem, 6vw, 4rem); }
-h2 { font-size: clamp(1.8rem, 5vw, 3rem); }
-h3 { font-size: clamp(1.4rem, 3.5vw, 2.2rem); }
+h1 { font-size: 1.166rem; } /* 14px / 12px */
+h2 { font-size: 1.166rem; }
+h3 { font-size: 1.166rem; }
+h4 { font-size: 1.083rem; } /* 13px / 12px */
 
 .section-title {
   text-align: center;
@@ -97,7 +99,7 @@ h3 { font-size: clamp(1.4rem, 3.5vw, 2.2rem); }
   color: var(--muted);
   max-width: 700px;
   margin: -2.5rem auto 3rem;
-  font-size: 1rem;
+  font-size: 1.083rem; /* 13px */
 }
 
 /* === Navigation === */
@@ -479,7 +481,7 @@ header.compact {
   justify-content: center;
 }
 
-.profile-name { font-size: 2rem; margin-bottom: 0.5rem; }
+.profile-name { font-size: 1.166rem; margin-bottom: 0.5rem; }
 .profile-job { 
   font-size: 1rem; 
   color: var(--muted); 
