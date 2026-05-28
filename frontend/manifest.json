@@ -1,0 +1,22 @@
+{
+  "name": "Tuyishime Honore Portfolio",
+  "short_name": "Honore",
+  "description": "Professional Portfolio of Tuyishime Honore - Educator & Innovator",
+  "start_url": "/frontend/index.html",
+  "display": "standalone",
+  "background_color": "#064e3b",
+  "theme_color": "#064e3b",
+  "icons": [
+    {
+      "src": "assets/images/favicon-circle.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/images/favicon-circle.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
