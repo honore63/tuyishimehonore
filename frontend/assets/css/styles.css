@@ -895,13 +895,24 @@ header.compact {
     grid-template-columns: 1fr 1fr; 
     gap: 2.5rem 1.5rem;
   }
-  .footer-grid-4 .footer-col:first-child,
-  .footer-grid-4 .footer-col:last-child { 
+  .footer-grid-4 .footer-col:first-child { 
     grid-column: 1 / -1; 
   }
-  .clean-links {
-    font-size: 0.85rem;
+  .footer-grid-4 .footer-col:last-child {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1rem;
   }
+  .footer-grid-4 .footer-col:last-child h3 {
+    grid-column: 1 / -1;
+    margin-bottom: 1rem;
+  }
+  .contact-block {
+    margin-bottom: 0 !important;
+  }
+  .contact-text strong { font-size: 0.75rem; }
   .ai-widget { right: 1rem; bottom: 1rem; width: calc(100% - 2rem); }
 }
 
