@@ -139,20 +139,28 @@ h3 { font-size: clamp(1.5rem, 4vw, 2.5rem); }
 }
 
 .nav-links a {
-  padding: 0.6rem 1.1rem;
+  padding: 0.6rem 0.8rem;
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--green-dark);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   border-radius: 8px;
   transition: all 0.25s ease;
+  white-space: nowrap;
 }
 
 .nav-links a:hover,
 .nav-links a.active {
   background: var(--green-light);
   color: var(--green-medium);
+}
+
+@media (max-width: 1100px) {
+  .nav-links a {
+    padding: 0.5rem 0.6rem;
+    font-size: 0.75rem;
+  }
 }
 
 .nav-toggle {
@@ -851,12 +859,14 @@ header.compact {
   .profile-card { grid-template-columns: 320px 1fr; }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .nav-links {
     position: fixed; top: var(--header-height); left: 0; width: 100%; height: calc(100vh - var(--header-height));
     background: var(--white); flex-direction: column; padding: 2rem; transform: translateX(100%);
     transition: transform 0.3s ease;
+    justify-content: flex-start;
   }
+  .nav-links a { font-size: 1.1rem; padding: 1.2rem; width: 100%; border-bottom: 1px solid #f1f5f9; }
   .nav-links.active { transform: translateX(0); }
   .nav-toggle { display: flex; }
   
