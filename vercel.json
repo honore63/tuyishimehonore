@@ -20,6 +20,8 @@
     { "source": "/ministry.html", "destination": "/frontend/ministry.html" },
     { "source": "/cv.html", "destination": "/frontend/cv.html" },
     { "source": "/contact.html", "destination": "/frontend/contact.html" },
-    { "source": "/index.html", "destination": "/frontend/index.html" }
+    { "source": "/index.html", "destination": "/frontend/index.html" },
+    { "source": "/manifest.json", "destination": "/frontend/manifest.json" },
+    { "source": "/sw.js", "destination": "/frontend/sw.js" }
   ]
 }
