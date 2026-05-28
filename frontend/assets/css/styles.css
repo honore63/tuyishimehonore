@@ -399,6 +399,64 @@ header::after {
   }
   
   header {
+    padding-top: 5rem !important;
+  }
+
+  .nav {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 60px !important;
+    padding: 0 5% !important;
+    background: #064e3b !important;
+    z-index: 9999 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important;
+  }
+
+  .nav-brand {
+    font-size: 0.9rem !important;
+    gap: 0.2rem !important;
+  }
+
+  .nav-links {
+    position: fixed !important;
+    top: 60px !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: calc(100vh - 60px) !important;
+    background: #04392a !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    padding: 1rem !important;
+    gap: 0 !important;
+    transform: translateX(100%) !important;
+    transition: transform 0.3s ease-in-out !important;
+    z-index: 9998 !important;
+    overflow-y: auto !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .nav-links.active {
+    transform: translateX(0) !important;
+  }
+
+  .nav-links a {
+    font-size: 1.1rem !important;
+    padding: 1.2rem 1rem !important;
+    border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+    text-align: left !important;
+    width: 100% !important;
+    color: #fff !important;
+  }
+}
+  
+  header {
     padding-top: 4rem !important; /* Push internal header content down to stay below fixed nav */
   }
 
@@ -2783,6 +2841,64 @@ body.home .floating-avatar {
     --header-height: 60px !important;
   }
   
+  header {
+    padding-top: 5rem !important;
+  }
+
+  .nav {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 60px !important;
+    padding: 0 5% !important;
+    background: #064e3b !important;
+    z-index: 9999 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important;
+  }
+
+  .nav-brand {
+    font-size: 0.9rem !important;
+    gap: 0.2rem !important;
+  }
+
+  .nav-links {
+    position: fixed !important;
+    top: 60px !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: calc(100vh - 60px) !important;
+    background: #04392a !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    padding: 1rem !important;
+    gap: 0 !important;
+    transform: translateX(100%) !important;
+    transition: transform 0.3s ease-in-out !important;
+    z-index: 9998 !important;
+    overflow-y: auto !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .nav-links.active {
+    transform: translateX(0) !important;
+  }
+
+  .nav-links a {
+    font-size: 1.1rem !important;
+    padding: 1.2rem 1rem !important;
+    border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+    text-align: left !important;
+    width: 100% !important;
+    color: #fff !important;
+  }
+}
+  
   /* Drastically reduce header padding only on phones */
   header {
     padding-top: 2rem !important;
@@ -3353,6 +3469,64 @@ body.high-contrast .fact-value {
     --header-height: 60px !important;
   }
   
+  header {
+    padding-top: 5rem !important;
+  }
+
+  .nav {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 60px !important;
+    padding: 0 5% !important;
+    background: #064e3b !important;
+    z-index: 9999 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important;
+  }
+
+  .nav-brand {
+    font-size: 0.9rem !important;
+    gap: 0.2rem !important;
+  }
+
+  .nav-links {
+    position: fixed !important;
+    top: 60px !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: calc(100vh - 60px) !important;
+    background: #04392a !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    padding: 1rem !important;
+    gap: 0 !important;
+    transform: translateX(100%) !important;
+    transition: transform 0.3s ease-in-out !important;
+    z-index: 9998 !important;
+    overflow-y: auto !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .nav-links.active {
+    transform: translateX(0) !important;
+  }
+
+  .nav-links a {
+    font-size: 1.1rem !important;
+    padding: 1.2rem 1rem !important;
+    border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+    text-align: left !important;
+    width: 100% !important;
+    color: #fff !important;
+  }
+}
+  
   /* Drastically reduce header padding only on phones */
   header {
     padding-top: 2rem !important;
@@ -3678,6 +3852,64 @@ header.compact .nav-toggle span {
   :root {
     --header-height: 60px !important;
   }
+  
+  header {
+    padding-top: 5rem !important;
+  }
+
+  .nav {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 60px !important;
+    padding: 0 5% !important;
+    background: #064e3b !important;
+    z-index: 9999 !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important;
+  }
+
+  .nav-brand {
+    font-size: 0.9rem !important;
+    gap: 0.2rem !important;
+  }
+
+  .nav-links {
+    position: fixed !important;
+    top: 60px !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: calc(100vh - 60px) !important;
+    background: #04392a !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    padding: 1rem !important;
+    gap: 0 !important;
+    transform: translateX(100%) !important;
+    transition: transform 0.3s ease-in-out !important;
+    z-index: 9998 !important;
+    overflow-y: auto !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .nav-links.active {
+    transform: translateX(0) !important;
+  }
+
+  .nav-links a {
+    font-size: 1.1rem !important;
+    padding: 1.2rem 1rem !important;
+    border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+    text-align: left !important;
+    width: 100% !important;
+    color: #fff !important;
+  }
+}
   
   /* Drastically reduce header padding only on phones */
   header {
