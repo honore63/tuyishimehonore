@@ -231,6 +231,58 @@
       });
     }
   </script>
+  <!-- Custom PWA Install Prompt -->
+  <div id="pwa-install-banner" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; background: var(--green-dark); color: white; padding: 1.5rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 9999; align-items: center; justify-content: space-between; border: 1px solid var(--green-medium); animation: slideUp 0.5s ease-out;">
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <img src="assets/images/favicon-circle.png" style="width: 45px; height: 45px; border-radius: 12px;" alt="App Icon">
+      <div>
+        <h4 style="margin: 0; font-size: 1rem;">Install Honore's App</h4>
+        <p style="margin: 0; font-size: 0.8rem; opacity: 0.8;">Access the portfolio faster from your home screen!</p>
+      </div>
+    </div>
+    <div style="display: flex; gap: 0.8rem;">
+      <button id="pwa-install-btn" style="background: var(--green-medium); color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 700; cursor: pointer; white-space: nowrap;">Install</button>
+      <button id="pwa-close-btn" style="background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); padding: 0.6rem 0.8rem; border-radius: 8px; cursor: pointer;">&times;</button>
+    </div>
+  </div>
+
+  <style>
+    @keyframes slideUp { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  </style>
+
+  <script>
+    let deferredPrompt;
+    const installBanner = document.getElementById('pwa-install-banner');
+    const installBtn = document.getElementById('pwa-install-btn');
+    const closeBtn = document.getElementById('pwa-close-btn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      // Prevent the default browser prompt
+      e.preventDefault();
+      // Stash the event so it can be triggered later.
+      deferredPrompt = e;
+      // Show our custom banner
+      installBanner.style.display = 'flex';
+    });
+
+    installBtn.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        // Show the install prompt
+        deferredPrompt.prompt();
+        // Wait for the user to respond to the prompt
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(User response to the install prompt: );
+        // We've used the prompt, and can't use it again, throw it away
+        deferredPrompt = null;
+        // Hide our banner
+        installBanner.style.display = 'none';
+      }
+    });
+
+    closeBtn.addEventListener('click', () => {
+      installBanner.style.display = 'none';
+    });
+  </script>
 </body>
 </html>
 
