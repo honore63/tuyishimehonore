@@ -123,16 +123,15 @@ h4 { font-size: 1.071rem; } /* 15px / 14px */
 }
 
 body.home .nav {
-  background: transparent !important;
-  box-shadow: none !important;
-  border-bottom: none !important;
-  backdrop-filter: none !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(10px) !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
 }
 
-body.home .nav-links a { color: var(--white) !important; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
-body.home .nav-brand .white { color: var(--white) !important; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
-body.home .nav-links a.active { background: rgba(255,255,255,0.2) !important; border-radius: 12px; }
-body.home .nav-toggle span { background: var(--white) !important; }
+body.home .nav-links a { color: var(--green-dark) !important; text-shadow: none; }
+body.home .nav-brand .white { color: var(--black) !important; text-shadow: none; }
+body.home .nav-links a.active { background: var(--green-light) !important; color: var(--green-medium) !important; }
+body.home .nav-toggle span { background: var(--black) !important; }
 
 .nav-brand {
   font-size: 1.3rem;
