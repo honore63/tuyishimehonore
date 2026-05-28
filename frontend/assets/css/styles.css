@@ -123,13 +123,15 @@ h4 { font-size: 1.071rem; } /* 15px / 14px */
 }
 
 body.home .nav {
-  background: rgba(6, 78, 59, 0.7);
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  background: transparent;
+  box-shadow: none;
+  border-bottom: none;
+  backdrop-filter: none;
 }
 
-body.home .nav-links a { color: var(--white); }
-body.home .nav-brand .white { color: var(--white); }
-body.home .nav-links a.active { background: rgba(255,255,255,0.1); color: var(--brand-cyan); }
+body.home .nav-links a { color: var(--white); text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+body.home .nav-brand .white { color: var(--white); text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+body.home .nav-links a.active { background: rgba(255,255,255,0.2); border-radius: 12px; }
 body.home .nav-toggle span { background: var(--white); }
 
 .nav-brand {
@@ -192,15 +194,15 @@ body.home .nav-toggle span { background: var(--white); }
 
 /* === Landing Header (Hero) === */
 body.home header {
-  min-height: 125vh;
+  min-height: 100vh;
   position: relative;
-  background: url('../images/Images/WhatsApp Image 2026-03-10 at 12.18.51 PM (1).jpeg') center 15%/cover no-repeat;
+  background: url('../images/Images/WhatsApp Image 2026-03-10 at 12.18.51 PM (1).jpeg') center top/cover no-repeat;
   background-attachment: scroll;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   text-align: center;
-  padding-top: 150px;
+  padding-top: var(--header-height);
 }
 
 body.home header::before {
