@@ -192,15 +192,15 @@ body.home .nav-toggle span { background: var(--white); }
 
 /* === Landing Header (Hero) === */
 body.home header {
-  min-height: 110vh;
+  min-height: 125vh;
   position: relative;
-  background: url('../images/Images/WhatsApp Image 2026-03-10 at 12.18.51 PM (1).jpeg') center top/cover no-repeat;
+  background: url('../images/Images/WhatsApp Image 2026-03-10 at 12.18.51 PM (1).jpeg') center 15%/cover no-repeat;
   background-attachment: scroll;
   display: flex;
-  align-items: flex-start; /* Align content to the top but with padding */
+  align-items: flex-start;
   justify-content: center;
   text-align: center;
-  padding-top: 200px; /* Push content down to show the face */
+  padding-top: 150px;
 }
 
 body.home header::before {
