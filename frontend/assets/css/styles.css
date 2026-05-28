@@ -327,16 +327,20 @@ header::after {
 }
 
 .nav {
-  position: absolute;
-  inset: 1rem 0 auto;
+  position: fixed;
+  top: 0;
   left: 0;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 5%;
+  padding: 1rem 5%;
   gap: 1.4rem;
-  z-index: 10;
+  z-index: 1000;
+  background: rgba(6, 78, 59, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .nav-brand {
@@ -3705,4 +3709,11 @@ header.compact .nav-toggle span {
   .timeline-item {
     padding: 10px 15px !important; /* Reduce excessive left/right padding on mobile */
   }
+}
+
+/* Active Page Styling */
+.nav-links a.active {
+  color: var(--brand-orange) !important;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
 }
