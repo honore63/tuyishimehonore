@@ -82,9 +82,9 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--green-dark);
 }
 
-h1 { font-size: clamp(2.5rem, 8vw, 5rem); }
-h2 { font-size: clamp(2rem, 6vw, 3.5rem); }
-h3 { font-size: clamp(1.5rem, 4vw, 2.5rem); }
+h1 { font-size: clamp(2.2rem, 6vw, 4rem); }
+h2 { font-size: clamp(1.8rem, 5vw, 3rem); }
+h3 { font-size: clamp(1.4rem, 3.5vw, 2.2rem); }
 
 .section-title {
   text-align: center;
@@ -97,7 +97,7 @@ h3 { font-size: clamp(1.5rem, 4vw, 2.5rem); }
   color: var(--muted);
   max-width: 700px;
   margin: -2.5rem auto 3rem;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 /* === Navigation === */
@@ -479,7 +479,7 @@ header.compact {
   justify-content: center;
 }
 
-.profile-name { font-size: 2.5rem; margin-bottom: 0.5rem; }
+.profile-name { font-size: 2rem; margin-bottom: 0.5rem; }
 .profile-job { 
   font-size: 1rem; 
   color: var(--muted); 
@@ -584,7 +584,7 @@ header.compact {
 
 .bible-card p {
   font-style: italic;
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: var(--muted);
   line-height: 1.6;
 }
