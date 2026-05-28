@@ -194,7 +194,7 @@ body.home .nav-toggle span { background: var(--white) !important; }
 
 /* === Landing Header (Hero) === */
 body.home header {
-  min-height: 110vh;
+  min-height: 100vh;
   position: relative;
   background: url('../images/profile.jpg') center top/cover no-repeat;
   background-attachment: scroll;
