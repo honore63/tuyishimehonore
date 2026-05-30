@@ -101,6 +101,7 @@ function initChatSystem() {
 
   // Initialize preview button functionality for personal testimony
   initPreview();
+  initNavScroll();
 }
 
 function initMobileMenu() {
@@ -735,20 +736,15 @@ function initChat() {
   // Make toggle button use a small avatar when collapsed
   if (!toggle.querySelector('.ai-avatar-mini')) {
     const avatar = document.createElement('img');
-    avatar.src = 'assets/images/profile.jpg';
+    avatar.src = 'assets/images/WhatsApp%20Image%202026-05-29%20at%204.32.30%20PM.jpeg';
     avatar.alt = 'AI chat';
     avatar.className = 'ai-avatar-mini';
     avatar.role = 'button';
     avatar.tabIndex = 0;
 
-    const text = document.createElement('span');
-    text.className = 'ai-toggle-text';
-    text.textContent = 'Chat with Honore';
-
     toggle.textContent = '';
-    toggle.style.flexDirection = 'column';
     toggle.appendChild(avatar);
-    toggle.appendChild(text);
+    toggle.classList.add('circular-toggle');
 
     // Make avatar independently clickable
     avatar.addEventListener('click', (e) => {
@@ -1004,8 +1000,8 @@ function createAccessibilityPanel() {
         <h4>Font Type</h4>
         <select id="font-family-selector" class="font-family-selector" aria-label="Select font family">
           <optgroup label="Serif">
-            <option value="'Rockwell', 'Roboto Slab', serif" selected>Slab Serif (default)</option>
-            <option value="Georgia, 'Times New Roman', Times, serif">Georgia</option>
+            <option value="Georgia, 'Times New Roman', Times, serif" selected>Georgia (default)</option>
+            <option value="'Rockwell', 'Roboto Slab', serif">Slab Serif</option>
             <option value="Garamond, 'Georgia', serif">Garamond</option>
             <option value="'Times New Roman', Times, serif">Times New Roman</option>
             <option value="'Merriweather', serif">Merriweather</option>
@@ -1092,28 +1088,6 @@ function createAccessibilityPanel() {
   // Add to page
   document.body.appendChild(accessBtn);
   document.body.appendChild(panel);
-
-  // Add optional nav button near the ministry link (top of pages)
-  const nav = document.querySelector('nav.nav');
-  if (nav) {
-    const navBtn = document.createElement('button');
-    navBtn.id = 'accessibility-nav-btn';
-    navBtn.className = 'accessibility-nav-btn';
-    navBtn.type = 'button';
-    navBtn.setAttribute('aria-label', 'Open accessibility settings');
-    navBtn.title = 'Accessibility settings';
-    navBtn.textContent = '♿';
-
-    // Insert after Ministry link, if exists first
-    const ministryLink = nav.querySelector('a[href="ministry.html"]');
-    if (ministryLink && ministryLink.parentNode) {
-      ministryLink.insertAdjacentElement('afterend', navBtn);
-    } else {
-      nav.appendChild(navBtn);
-    }
-
-    navBtn.addEventListener('click', toggleAccessibilityPanel);
-  }
 
   // Add event listeners
   accessBtn.addEventListener('click', toggleAccessibilityPanel);
@@ -1505,3 +1479,5 @@ function screenReaderOutHandler(e) {
   const target = e.target;
   if (target.classList) target.classList.remove('reading-focus');
 }
+
+function initNavScroll() { const nav = document.querySelector('.nav'); if (!nav) return; const handleScroll = () => { if (window.scrollY > 50) nav.classList.add('scrolled'); else nav.classList.remove('scrolled'); }; window.addEventListener('scroll', handleScroll); handleScroll(); }
