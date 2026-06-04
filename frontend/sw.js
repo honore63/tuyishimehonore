@@ -1,4 +1,4 @@
-const CACHE_NAME = 'honore-portfolio-v4';
+const CACHE_NAME = 'honore-portfolio-v5';
 const ASSETS_TO_CACHE = [
   './index.html',
   './assets/css/styles.css',
