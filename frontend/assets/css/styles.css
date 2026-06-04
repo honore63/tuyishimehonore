@@ -972,21 +972,29 @@ header.compact {
     width: 100%; 
     height: calc(100vh - var(--header-height));
     height: calc(100dvh - var(--header-height));
-    background: #000000; /* Matching black theme for mobile menu */
+    background: var(--white); /* White background for mobile menu */
     flex-direction: column; 
-    padding: 2rem; 
+    padding: 1rem 0; 
     transform: translateX(100%);
-    transition: transform 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     justify-content: flex-start;
     z-index: 999;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.1);
   }
   .nav-links a { 
-    font-size: 1.1rem; 
-    padding: 1.2rem; 
+    font-size: 1rem; 
+    padding: 1.2rem 2rem; 
     width: 100%; 
-    border-bottom: 1px solid rgba(255,255,255,0.1); 
-    color: var(--white) !important;
-    text-align: center;
+    border-bottom: 1px solid #f1f5f9; 
+    color: var(--text) !important;
+    text-align: left;
+    font-weight: 700;
+  }
+  .nav-links a:hover,
+  .nav-links a.active {
+    background: var(--green-light);
+    color: var(--green-dark) !important;
+    padding-left: 2.5rem; /* Subtle indent effect on active/hover */
   }
   .nav-links.active { transform: translateX(0); }
   .nav-toggle { 
