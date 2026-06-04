@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -28,6 +28,7 @@
         <a href="projects.html">Projects</a>
         <a href="cv.html">CV</a>
         <a href="ministry.html">Ministry</a>
+        <a href="contact.html">Contact</a>
       </div>
     </nav>
 
@@ -113,6 +114,8 @@
             <li><a href="education.html">Academic Path</a></li>
             <li><a href="cv.html">Curriculum Vitae</a></li>
             <li><a href="ministry.html">Christian Ministry</a></li>
+            <li><a href="contact.html">Contact Me</a></li>
+            <li><a href="contact.html">Contact Me</a></li>
             <li><a href="https://whatsapp.com/channel/0029Vb8NbJZ3AzNOPKJiLX3O" target="_blank" style="color: #25D366; font-weight: 700; margin-top: 0.5rem;"><i class="fa-brands fa-whatsapp"></i> WhatsApp Channel</a></li>
           </ul>
         </div>
@@ -280,8 +283,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       const currentPage = window.location.pathname.split('/').pop() || 'index.html';
       const navLinks = document.querySelectorAll('.nav-links a');
-      navLinks.forEach(link
-       => {
+      navLinks.forEach(link => {
         if (link.getAttribute('href') === currentPage) {
           link.classList.add('active');
         }
