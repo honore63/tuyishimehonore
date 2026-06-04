@@ -131,7 +131,11 @@ h4 { font-size: 1.071rem; } /* 15px / 14px */
   background: #000000; /* Solid black background */
   box-shadow: 0 2px 10px rgba(0,0,0,0.3);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  transition: transform 0.3s ease; /* Only transition for mobile menu if needed */
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.nav-open {
+  overflow: hidden;
 }
 
 /* Removed dynamic scrolling effects to keep the navbar 'static' in appearance */
@@ -202,6 +206,16 @@ body.home .nav-brand .white { color: var(--white); }
   height: 3px;
   background: var(--white); /* White bars on black navbar */
   transition: 0.3s ease;
+}
+
+.nav-toggle.active span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.nav-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+.nav-toggle.active span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
 }
 
 /* === Landing Header (Hero) === */
@@ -946,12 +960,18 @@ header.compact {
 }
 
 @media (max-width: 768px) {
+  .nav {
+     height: var(--header-height);
+     padding: 0 1rem;
+     background: #000000;
+  }
   .nav-links {
     position: fixed; 
     top: var(--header-height); 
     left: 0; 
     width: 100%; 
     height: calc(100vh - var(--header-height));
+    height: calc(100dvh - var(--header-height));
     background: #000000; /* Matching black theme for mobile menu */
     flex-direction: column; 
     padding: 2rem; 
