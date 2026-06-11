@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -18,15 +18,118 @@
       <div class="nav-brand"><span class="cyan">TUYISHIME</span> <span class="orange">HONORE</span> <span class="white">PROFILE</span></div>
       <div class="nav-toggle" aria-label="Toggle Navigation"><span></span><span></span><span></span></div>
       <div class='nav-links'>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="roles.html">Roles</a>
-        <a href="development.html">Development</a>
-        <a href="education.html">Education</a>
-        <a href="projects.html">Projects</a>
-        <a href="cv.html">CV</a>
-        <a href="ministry.html">Ministry</a>
+        <a href="index.html" data-i18n="nav-home">Home</a>
+        <a href="about.html" data-i18n="nav-about">About</a>
+        <a href="roles.html" data-i18n="nav-roles">Roles</a>
+        <a href="development.html" data-i18n="nav-dev">Development</a>
+        <a href="education.html" data-i18n="nav-edu">Education</a>
+        <a href="projects.html" data-i18n="nav-proj">Projects</a>
+        <a href="cv.html" data-i18n="nav-cv">CV</a>
+        <a href="ministry.html" data-i18n="nav-min">Ministry</a>
+      </div>
+      <div class="nav-accessibility">
+        <button id="acc-btn" class="acc-btn" title="Accessibility Settings" aria-label="Accessibility Settings">
+          <i class="fa-solid fa-universal-access"></i>
+        </button>
+        <div id="acc-dropdown" class="acc-dropdown">
+          <div class="acc-section">
+            <span class="acc-label" data-i18n="acc-language">Language / Langue</span>
+            <div class="lang-switcher">
+              <button class="lang-btn active" data-lang="en">
+                <img src="https://flagcdn.com/h20/gb.png" alt="English" style="width: 18px;"> EN
+              </button>
+              <button class="lang-btn" data-lang="fr">
+                <img src="https://flagcdn.com/h20/fr.png" alt="Français" style="width: 18px;"> FR
+              </button>
+            </div>
+          </div>
+          
+          <div class="acc-section">
+            <span class="acc-label" data-i18n="acc-font-type">Font Type</span>
+            <select id="font-type-selector" class="font-selector">
+              <optgroup label="⭐ Top 10 for Portfolio">
+                <option value="Inter" selected>Inter</option>
+                <option value="Plus Jakarta Sans">Plus Jakarta Sans</option>
+                <option value="Poppins">Poppins</option>
+                <option value="Manrope">Manrope</option>
+                <option value="Outfit">Outfit</option>
+                <option value="DM Sans">DM Sans</option>
+                <option value="Urbanist">Urbanist</option>
+                <option value="Montserrat">Montserrat</option>
+                <option value="Sora">Sora</option>
+                <option value="Lexend">Lexend</option>
+              </optgroup>
+              <optgroup label="Sans-Serif">
+                <option value="Roboto">Roboto</option>
+                <option value="Open Sans">Open Sans</option>
+                <option value="Lato">Lato</option>
+                <option value="Nunito">Nunito</option>
+                <option value="Work Sans">Work Sans</option>
+                <option value="Rubik">Rubik</option>
+                <option value="Mulish">Mulish</option>
+                <option value="Figtree">Figtree</option>
+                <option value="Raleway">Raleway</option>
+                <option value="Cabin">Cabin</option>
+                <option value="Quicksand">Quicksand</option>
+                <option value="Noto Sans">Noto Sans</option>
+                <option value="Assistant">Assistant</option>
+                <option value="Karla">Karla</option>
+                <option value="Public Sans">Public Sans</option>
+              </optgroup>
+              <optgroup label="Serif Fonts">
+                <option value="Merriweather">Merriweather</option>
+                <option value="Playfair Display">Playfair Display</option>
+                <option value="Lora">Lora</option>
+                <option value="Cormorant Garamond">Cormorant Garamond</option>
+                <option value="Libre Baskerville">Libre Baskerville</option>
+                <option value="Crimson Text">Crimson Text</option>
+                <option value="EB Garamond">EB Garamond</option>
+                <option value="Bitter">Bitter</option>
+                <option value="Spectral">Spectral</option>
+                <option value="Source Serif Pro">Source Serif Pro</option>
+              </optgroup>
+              <optgroup label="Monospace Fonts">
+                <option value="JetBrains Mono">JetBrains Mono</option>
+                <option value="Fira Code">Fira Code</option>
+                <option value="Source Code Pro">Source Code Pro</option>
+                <option value="IBM Plex Mono">IBM Plex Mono</option>
+                <option value="Space Mono">Space Mono</option>
+                <option value="Roboto Mono">Roboto Mono</option>
+                <option value="Inconsolata">Inconsolata</option>
+                <option value="Cousine">Cousine</option>
+                <option value="Ubuntu Mono">Ubuntu Mono</option>
+                <option value="Anonymous Pro">Anonymous Pro</option>
+              </optgroup>
+              <optgroup label="Display & Creative">
+                <option value="Bebas Neue">Bebas Neue</option>
+                <option value="Oswald">Oswald</option>
+                <option value="Anton">Anton</option>
+                <option value="Archivo Black">Archivo Black</option>
+                <option value="Barlow Condensed">Barlow Condensed</option>
+              </optgroup>
+            </select>
+          </div>
 
+          <div class="acc-section">
+            <span class="acc-label" data-i18n="acc-font-size">Font Size</span>
+            <div class="font-controls">
+              <button id="font-minus" class="font-size-btn" title="Decrease font size">-</button>
+              <span id="font-display" class="font-display">100%</span>
+              <button id="font-plus" class="font-size-btn" title="Increase font size">+</button>
+            </div>
+          </div>
+
+          <div class="acc-section">
+            <span class="acc-label" data-i18n="acc-reader">Screen Reader</span>
+            <label class="acc-toggle-container">
+              <div class="switch">
+                <input type="checkbox" id="screen-reader-toggle">
+                <span class="slider"></span>
+              </div>
+              <span data-i18n="acc-enable-tts">Enable Text-to-Speech</span>
+            </label>
+          </div>
+        </div>
       </div>
     </nav><header class="compact">
 
@@ -34,33 +137,33 @@
 
   <main class="container" role="main">
     <section class="section" aria-labelledby="projects-title">
-      <h2 id="projects-title" class="section-title">Projects Showcase</h2>
-      <p class="section-subtitle">
+      <h2 id="projects-title" class="section-title" data-i18n="nav-proj">Projects Showcase</h2>
+      <p class="section-subtitle" data-i18n="proj-subtitle">
         Innovative web applications and digital platforms developed to revolutionize educational planning and student engagement.
       </p>
 
       <div class="card-grid">
         <div class="card card-blue">
-          <h3>Digital Lesson Plan</h3>
-          <p>A sophisticated lesson-planning web application designed to empower teachers with efficient building, organization, and sharing tools for standards-aligned curricula.</p>
+          <h3 data-i18n="proj-dlp-title">Digital Lesson Plan</h3>
+          <p data-i18n="proj-dlp-desc">A sophisticated lesson-planning web application designed to empower teachers with efficient building, organization, and sharing tools for standards-aligned curricula.</p>
           <div style="margin-top: 1.5rem;">
-            <a href="https://digital-lesson-plan.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn-outline" >Launch Application</a>
+            <a href="https://digital-lesson-plan.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn-outline" ><i class="fa-solid fa-rocket"></i> <span data-i18n="btn-launch">Launch Application</span></a>
           </div>
         </div>
 
         <div class="card card-red">
-          <h3>ICT Education Hub</h3>
-          <p>An influential YouTube channel dedicated to pedagogical digital transformation. Features expert tutorials and tutorials for seamless technology integration in modern classrooms.</p>
+          <h3 data-i18n="proj-hub-title">ICT Education Hub</h3>
+          <p data-i18n="proj-hub-desc">An influential YouTube channel dedicated to pedagogical digital transformation. Features expert tutorials and tutorials for seamless technology integration in modern classrooms.</p>
           <div style="margin-top: 1.5rem;">
-            <a href="https://www.youtube.com/@TuyishimeHonore-qt9hd" target="_blank" rel="noopener noreferrer" class="btn btn-outline" >Explore Channel</a>
+            <a href="https://www.youtube.com/@TuyishimeHonore-qt9hd" target="_blank" rel="noopener noreferrer" class="btn btn-outline" ><i class="fa-brands fa-youtube"></i> <span data-i18n="btn-explore">Explore Channel</span></a>
           </div>
         </div>
 
         <div class="card card-green">
-          <h3>Marks Management System</h3>
-          <p>A web application that helps teachers generate report cards and other related reports after assessments.</p>
+          <h3 data-i18n="proj-marks-title">Marks Management System</h3>
+          <p data-i18n="proj-marks-desc">A web application that helps teachers generate report cards and other related reports after assessments.</p>
           <div style="margin-top: 1.5rem;">
-            <a href="https://marksmanagmentsystem.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn-outline" >Launch Application</a>
+            <a href="https://marksmanagmentsystem.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn-outline" ><i class="fa-solid fa-chart-line"></i> <span data-i18n="btn-launch">Launch Application</span></a>
           </div>
         </div>
       </div>
@@ -179,15 +282,26 @@
         <span class="ai-bar"></span>
       </div>
       <div class="ai-messages" id="ai-messages" aria-live="polite"></div>
-      <form id="ai-form" class="ai-form">
-        <input id="ai-input" class="ai-input" type="text" placeholder="Ask me anything..." autocomplete="off" required />
-        <button type="submit" class="btn">Send</button>
-      </form>
-      <label class="ai-file-label">
-        <input type="file" id="ai-file" class="ai-file" accept=".txt,.pdf" />
-        <span>Upload a document (CV/Diploma)</span>
-      </label>
-      <div id="ai-file-status" class="ai-file-status"></div>
+      <div class="prompt-container">
+        <form id="ai-form" class="prompt-box">
+          <textarea id="ai-input" class="prompt-input" placeholder="Hi! I'm Honore's AI assistant. Ask me anything about my work." required></textarea>
+          <div class="prompt-toolbar">
+            <div class="prompt-toolbar-left">
+              <label class="prompt-tool-btn" title="Upload a document">
+                <input type="file" id="ai-file" accept=".txt,.pdf" style="display:none;" />
+                <i class="fa-solid fa-plus"></i>
+              </label>
+              <span class="prompt-tool-btn"><i class="fa-solid fa-bolt"></i> Fast</span>
+              <span class="prompt-tool-btn"><i class="fa-solid fa-angle-up"></i> Gemini</span>
+            </div>
+            <div class="prompt-toolbar-right">
+              <button type="button" class="prompt-tool-btn" title="Voice input"><i class="fa-solid fa-microphone"></i></button>
+              <button type="submit" class="prompt-send-btn" title="Send"><i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+          </div>
+        </form>
+        <div id="ai-file-status" class="ai-file-status"></div>
+      </div>
     </div>
   </div>
 

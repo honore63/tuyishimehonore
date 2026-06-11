@@ -1,3 +1,6 @@
+window.Tawk_API = window.Tawk_API || {};
+window.Tawk_API.autoStart = false;
+
 const videos = [
   { id: 'yvzLHXqcanQ' },
   { id: 'glsbQJfo4T8' },
@@ -82,8 +85,30 @@ function initChatSystem() {
   // Initialize video functionality only if elements exist
   initVideos();
 
+  // Initialize hero quotes rotation (Home Page only)
+  initHeroQuotes();
+
   // Initialize accessibility features
   initAccessibilityFeatures();
+
+  function saveAccessibilitySettings() {
+    const toggle = document.getElementById('screen-reader-toggle');
+    if (toggle) {
+      localStorage.setItem('honore-screen-reader', toggle.checked);
+    }
+  }
+
+  function loadAccessibilitySettings() {
+    const toggle = document.getElementById('screen-reader-toggle');
+    const saved = localStorage.getItem('honore-screen-reader');
+    if (toggle && saved !== null) {
+      toggle.checked = (saved === 'true');
+      if (toggle.checked) {
+         // Small delay to ensure voices are ready
+         setTimeout(() => toggleScreenReader(), 1000);
+      }
+    }
+  }
 
   // Initialize hero quotes rotation (Home Page only)
   initHeroQuotes();
@@ -377,12 +402,16 @@ function createBotMessage(text) {
       b.style.padding = '0.4rem 0.8rem';
       b.textContent = btn.label;
       b.onclick = () => {
-        if (btn.action.startsWith('http') || btn.action.endsWith('.pdf')) {
-          window.open(btn.action, '_blank');
-        } else if (btn.action.startsWith('/')) {
-            window.location.href = btn.action;
+        const action = btn.action.trim();
+        if (action.startsWith('http') || action.endsWith('.pdf') || action.endsWith('.docx')) {
+          window.open(action, '_blank');
+        } else if (action.endsWith('.html') || action.includes('#')) {
+          // Standard page navigation
+          window.location.href = action;
+        } else if (action.startsWith('/')) {
+          window.location.href = action;
         } else {
-          console.log('Action:', btn.action);
+          window.location.href = action; // Try as standard relative link
         }
       };
       buttonContainer.appendChild(b);
@@ -455,174 +484,142 @@ function getConversationInfo() {
 }
 
 function scanPageContent() {
-  const elements = document.querySelectorAll('h1, h2, h3, p, li, .card h3');
-  let content = "Current Page Content:\n";
+  const elements = document.querySelectorAll('h1, h2, h3, .card h3, .section-title, .role-item h3');
+  const paragraphs = document.querySelectorAll('.card p, .section-subtitle, .brand-desc');
+  
+  let content = `I am currently analyzing the ${document.title} page.\n\nKey information found:\n`;
+  
   elements.forEach(el => {
-    if (el.textContent.length > 10) {
-      content += `- ${el.textContent.trim()}\n`;
+    if (el.textContent.trim()) {
+      content += `[HEADING/TITLE]: ${el.textContent.trim()}\n`;
     }
   });
-  return content;
+
+  paragraphs.forEach(el => {
+    if (el.textContent.length > 20) {
+      content += `[CONTENT]: ${el.textContent.trim()}\n`;
+    }
+  });
+
+  return content.slice(0, 3000); // Limit to avoid token bloat while keeping real info
 }
 
 function getFallbackResponse(message) {
+  const lang = window.HONORE_CURRENT_LANG || 'en';
   const lower = message.trim().toLowerCase();
 
-  // Dynamic Agent Reasoning Simulation
-  const reasoningSteps = [
-    "🔍 Scanning current page for context...",
-    "📂 Accessing Honore's profile database...",
-    "📂 Checking document repository for related files...",
-    "🧠 Processing request via local agent logic...",
-    "✨ Formulating specialized response..."
-  ];
+  const reasoningSteps = {
+    en: [
+      "🔍 Scanning Honore's local database for real data...",
+      "📂 Accessing Work Experience & Education records...",
+      "🧠 Processing request via local agent logic...",
+      "✨ Formulating response based on real portfolio facts..."
+    ],
+    fr: [
+      "🔍 Analyse de la base de données locale d'Honore...",
+      "📂 Accès aux dossiers d'expérience et d'éducation...",
+      "🧠 Traitement de la demande via l'agent local...",
+      "✨ Formulation de la réponse basée sur les faits du portfolio..."
+    ]
+  };
 
-  // Specific Knowledge Extraction (Simulating Agent Capability)
-  const pageContext = scanPageContent();
-  const docs = chatState.uploadedDocuments.length > 0 ? `(Agent: Referenced ${chatState.uploadedDocuments.join(", ")})` : "";
+  const steps = reasoningSteps[lang] || reasoningSteps.en;
 
   const patterns = [
     {
-      test: /\b(hi|hello|hey|greetings|who are you|introduce|who is honore)\b/i,
-      reply: `Hello! I'm Honore Tuyishime, a professional educator and ICT trainer dedicated to transforming education in Rwanda. How can I assist you today? ((BUTTON:About Honore:about.html)) ((BUTTON:View Projects:projects.html))`
+      test: /\b(hi|hello|hey|bonjour|salut|qui est|présente|introduce)\b/i,
+      en: `Hello! I'm the AI assistant for **Tuyishime Honore**. Honore is a professional Teacher, ICT Trainer, and EdTech Advocate based in Rwanda. He is a STEM Educator at **Rukara Model School**. ((BUTTON:About Honore:about.html))`,
+      fr: `Bonjour ! Je suis l'assistant IA de **Tuyishime Honore**. Honore est un enseignant professionnel, formateur en TIC et défenseur des technologies éducatives au Rwanda. Il est éducateur STEM à **Rukara Model School**. ((BUTTON:À propos:about.html))`
     },
     {
-      test: /\b(education|study|studied|school|university|academic|background|learn)\b/i,
-      reply: `Honore has a strong academic background in STEM and Computer Science, currently studying at ULK. You can view his full timeline and download certificates on the Education page. ((BUTTON:View Education:education.html)) ((BUTTON:A2 Diploma:Certicifacates/260110_RECRUITMENT_2311140955_26_001.pdf))`
+      test: /\b(education|study|école|académique|diplôme)\b/i,
+      en: `Honore's background: Current ULK student, PTRP TTC De La Salle, A2 TTC Matimba. ((BUTTON:View Education:education.html))`,
+      fr: `Parcours d'Honore : Étudiant à l'ULK, PTRP TTC De La Salle, A2 TTC Matimba. ((BUTTON:Voir Éducation:education.html))`
     },
     {
-      test: /\b(cv|resume|background|experience|qualification|work history)\b/i,
-      reply: `He currently teaches at Rukara Model School and trains teachers at PISQUARE. You can view his interactive CV, certificates, and academic documents directly on the CV page, or download it: ((BUTTON:View CV Page:cv.html)) ((BUTTON:Download CV:Document/Honore curriculum vitae.pdf)) ((BUTTON:View Experience:roles.html))`
-    },
-    {
-      test: /\b(certificat|diploma|credential|training|qualification)\b/i,
-      reply: `Honore holds several prestigious credentials, including his A2 Diploma, PTRP Certificate, and IBM AI Literacy. You can view or download them on the CV page: ((BUTTON:View CV Page:cv.html)) ((BUTTON:A2 Diploma:Document/A2 TTC _SME_CERTIFICATE .pdf)) ((BUTTON:PTRP Cert:Document/PTR P Certificate .pdf)) ((BUTTON:MCE Cert:Certicifacates/240102_RECRUITMENT_2311140955_26_001.pdf))`
-    },
-    {
-      test: /\b(contact|email|phone|reach|connect)\b/i,
-      reply: `You can reach Honore at +250 791 684 429 or tuyishimehonore63@gmail.com. Feel free to use the contact page as well! ((BUTTON:Contact Page:contact.html))`
-    },
-    {
-      test: /\b(ministry|church|god|scripture|verse|discipleship)\b/i,
-      reply: `Honore's life is grounded in Matthew 28:19 and Acts 1:8, focusing on discipleship and community transformation. ((BUTTON:Ministry Work:ministry.html))`
-    },
-    {
-      test: /\b(project|developer|tech|coding|web|app)\b/i,
-      reply: `Explore his pedagogical apps like the Digital Lesson Plan and his ICT Education Hub. ((BUTTON:View Projects:projects.html))`
-    },
-    {
-      test: /\b(thank you|thanks|amazing|awesome|wow|helpful)\b/i,
-      reply: `You are very welcome! It's an honor to assist you. Is there anything else you'd like to explore in Honore's portfolio?`
+      test: /\b(work|experience|job|travail|métier|enseignant|rukara)\b/i,
+      en: `Honore is a STEM Educator at Rukara Model School and Senior ICT Trainer at PISQUARE (Edify). ((BUTTON:Experience:roles.html))`,
+      fr: `Honore est éducateur STEM à Rukara Model School et formateur principal en TIC chez PISQUARE (Edify). ((BUTTON:Expérience:roles.html))`
     }
   ];
 
   for (const entry of patterns) {
     if (entry.test.test(lower)) {
-      return `---THINKING---\n${reasoningSteps.join("\n")}\n---END THINKING---\n${entry.reply}`;
+      const reply = entry[lang] || entry.en;
+      return `---THINKING---\n${steps.join("\n")}\n---END THINKING---\n${reply}`;
     }
   }
 
-  return `---THINKING---\n${reasoningSteps.join("\n")}\n---END THINKING---I've analyzed your request against Honore's portfolio database. I couldn't find a specific match, but I can tell you about his projects, CV, education, or contact details. What would you like to see? ((BUTTON:View CV Page:cv.html)) ((BUTTON:View Projects:projects.html)) ((BUTTON:Download CV:../docs/Document/Honore curriculum vitae.pdf))`;
+  const defaultReplies = {
+    en: "I've analyzed your request. I can tell you about Honore's **STEM teaching**, **ICT training**, or **Academic background**. ((BUTTON:View CV:cv.html))",
+    fr: "J'ai analysé votre demande. Je peux vous parler de l'**enseignement STEM** d'Honore, de sa **formation en TIC** ou de son **parcours académique**. ((BUTTON:Voir CV:cv.html))"
+  };
+
+  return `---THINKING---\n${steps.join("\n")}\n---END THINKING---\n${defaultReplies[lang] || defaultReplies.en}`;
 }
 
 // HONORE'S COMPLETE BACKGROUND CONTEXT (POWERFUL VERSION)
+// === HONORE'S OFFICIAL AI ASSISTANT PROMPT ===
 const HONORE_CONTEXT = `
-You are the official AI assistant of Tuyishime Honore's portfolio website.
-You represent Tuyishime Honore — a professional educator, ICT trainer, and education technology innovator in Rwanda.
-Your job is to assist visitors by answering questions, explaining projects, guiding navigation, and analyzing documents available on the platform.
+You are the official AI assistant for Tuyishime Honore's portfolio website.
 
-👤 IDENTITY & PERSONALITY
-- Speak professionally, clearly, and confidently.
-- Be friendly and helpful, not robotic.
-- Represent Honore’s expertise in:
-  * Education
-  * ICT Integration
-  * STEM teaching
-  * AI in education
-  * Christian ministry (when relevant)
+Your purpose is to help visitors learn about Honore, his projects, skills, experience, services, and achievements.
 
-📚 KNOWLEDGE BASE
-PROFILE:
-- Name: Tuyishime Honore
-- Role: Teacher, ICT Trainer, Education Technology Advocate
-- Workplace: Rukara Model School of Sciences and Mathematics
-- ICT Trainer: PISQUARE (supported by Edify)
-- Student: ULK (Computer Science & Physics Education)
+Your responsibilities:
+- Introduce Honore professionally when visitors ask about him.
+- Explain projects in simple and clear language.
+- Recommend relevant projects based on visitor interests.
+- Provide links to GitHub repositories, live demos, CV, and contact information when available.
+- Explain technologies and tools used in projects.
+- Answer questions about services offered.
+- Help recruiters and clients quickly find relevant information.
+- Encourage visitors to contact Honore for collaborations, freelance work, consulting, or employment opportunities.
 
-MISSION:
-- Transform education in Rwanda using technology.
+Communication Style:
+- Friendly and professional.
+- Clear and concise.
+- Avoid unnecessary technical jargon unless requested.
+- Use bullet points for lists.
+- Keep answers focused on the user's question.
 
-EXPERIENCE:
-- Teaching 200+ STEM students.
-- Training 100+ teachers in ICT.
-- Leading CPD programs.
-- Managing digital learning systems.
+Rules:
+- Never invent information.
+- Only use information stored in the portfolio database or knowledge base.
+- If information is unavailable, politely say so.
+- Do not discuss topics unrelated to the portfolio owner.
+- Do not provide misleading or false information.
 
-EDUCATION:
-- Primary: GS Kagitumba (2011–2016)
-- O-Level: GS Kagitumba (2017–2019)
-- A2 SME: TTC Matimba (2020–2023)
-- PTRP: TTC De La Salle (2023–2024)
-- Degree: ULK (2024–Present)
+Examples:
+Visitor: Who is Honore?
+Assistant: Tuyishime Honore is a developer and technology enthusiast with experience building modern web applications, AI-powered solutions, and database-driven systems.
 
-SKILLS:
-- Web: HTML, CSS, JS, PHP, Laravel
-- Tools: Google Classroom, MS Teams, Kahoot, GeoGebra
-- Expertise: AI tools, media production, LMS systems
+Visitor: What technologies does he use?
+Assistant:
+- Supabase
+- PostgreSQL
+- React
+- TypeScript
+- Tailwind CSS
+- OpenAI APIs
 
-PROJECTS:
-- Digital Lesson Plan System: A web app for streamlined teacher planning.
-- ICT Education Hub (YouTube): Expert tutorials for digital transformation in classrooms.
-
-MINISTRY:
-- Based on Matthew 28:19 and Acts 1:8.
-- Focus: discipleship, teaching, transformation.
-
-🧠 INTELLIGENT BEHAVIOR
-- ALWAYS start your internal process with a thinking block for analysis:
-  ---THINKING---
-  Write your reasoning steps here (e.g., Identifying intent, Scanning portfolio for X, Formulating answer)
-  ---END THINKING---
-- Answer using portfolio data when possible.
-- If answer is not found:
-  Say: "I couldn't find that in Honore’s portfolio. Can you clarify?"
-
-📂 DOCUMENT & FILE HANDLING
-- You can offer files using the button syntax: ((BUTTON:Label:Path))
-- Available Files:
-  * CV: ((BUTTON:Download CV:../docs/Document/Honore curriculum vitae.pdf))
-  * A2 Diploma (SME): ((BUTTON:A2 Diploma:../docs/Document/A2 TTC _SME_CERTIFICATE .pdf))
-  * PTRP Certificate: ((BUTTON:PTRP Certificate:../docs/Document/PTR P Certificate .pdf))
-  * One Million Prompts: ((BUTTON:Prompters Cert:../docs/Certicifacates/260110_RECRUITMENT_2311140955_26_001.pdf))
-  * Microsoft Certified Educator: ((BUTTON:MCE Certificate:../docs/Certicifacates/240102_RECRUITMENT_2311140955_26_001.pdf))
-  * IBM AI Literacy: ((BUTTON:AI Literacy Cert:../docs/Certicifacates/Completion Certificate _ SkillsBuild_Accepting the AI Literacy Digital Credential.pdf))
-  * AI Impact Policy: ((BUTTON:AI Policy Cert:../docs/Certicifacates/260108_RECRUITMENT_2311140955_26_001.pdf))
-
-💬 CONVERSATION FEATURES
-- Maintain memory of conversation.
-- Use button syntax to suggest navigation:
-  * ((BUTTON:View CV Page:cv.html))
-  * ((BUTTON:View Projects:projects.html))
-  * ((BUTTON:About Honore:about.html))
-  * ((BUTTON:Contact Me:contact.html))
-
-🎯 GOAL
-Make users feel like they are interacting with a real expert who fully understands Honore’s work, impact, and vision.
+Visitor: Can I download his CV?
+Assistant:
+Yes, you can download the CV here:
+../docs/Document/Honore curriculum vitae.pdf
 `;
 
-// OpenAI API Key - User will set this
+// Internal State
 let OPENAI_API_KEY = '';
 
-// Function to set the OpenAI API key (call this from console or put in code)
 function setOpenAIKey(apiKey) {
   OPENAI_API_KEY = apiKey;
   console.log('✓ OpenAI API key set successfully');
   console.log('🟢 Chat will now use real AI responses with thinking bubbles');
 }
 
-// Show startup message
+// Startup logs
 console.log('%c🤖 HONORE AI CHAT READY', 'color: #228b22; font-size: 14px; font-weight: bold;');
-console.log('%c📝 To enable AI responses: Open console and paste:\nsetOpenAIKey("sk-proj-YOUR-KEY-HERE")', 'color: #FF6B35; font-size: 12px;');
+console.log('%c📝 To enable AI: setOpenAIKey("sk-proj-...")', 'color: #FF6B35; font-size: 11px;');
 console.log('%cThen chat will show real AI responses with thinking bubbles! 🧠', 'color: #4a584a; font-size: 12px;');
 
 async function getChatResponse(message) {
@@ -681,7 +678,7 @@ async function getChatResponse(message) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          system_instruction: { parts: [{ text: `You are Honore's AI Assistant. ${HONORE_CONTEXT}\nPage Context: ${pageContext}${docContext}` }] },
+          system_instruction: { parts: [{ text: `You are Honore's AI Assistant. ${HONORE_CONTEXT}\nCRITICAL: Respond exclusively in the user's language which is: ${window.HONORE_CURRENT_LANG || 'English'}. If the language is French, all your output must be French.\nPage Context: ${pageContext}${docContext}` }] },
           contents: geminiHistory
         })
       });
@@ -722,7 +719,9 @@ function initChat() {
     input.focus();
 
     if (firstOpen) {
-      appendChatMessageEnhanced('Hello! I\'m Honore. I really appreciate you reaching out and taking the time to connect. I\'m here to help, share ideas, and support you in any way I can. How can I assist you today?', 'bot');
+      const lang = window.HONORE_CURRENT_LANG || 'en';
+      const greet = HONORE_TRANSLATIONS[lang]["chat-greeting"] || "Hello!";
+      appendChatMessageEnhanced(greet, 'bot');
       firstOpen = false;
     }
   }
@@ -771,7 +770,13 @@ function initChat() {
     headerAvatar.addEventListener('click', openWidget);
   }
 
-  // Role selector removed - not needed
+  // Handle Enter to send (Shift+Enter for newline)
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      form.dispatchEvent(new Event('submit', { cancelable: true }));
+    }
+  });
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -846,6 +851,94 @@ function initChat() {
       }
     });
   }
+
+  // === Voice Input (Microphone Button) ===
+  initVoiceInput(input);
+
+  // === Tool Buttons (Fast / Gemini) ===
+  const toolBtns = document.querySelectorAll('.prompt-tool-btn');
+  toolBtns.forEach(btn => {
+    if (btn.textContent.includes('Fast') || btn.textContent.includes('Gemini')) {
+      btn.addEventListener('click', () => {
+        btn.classList.toggle('active');
+        if (btn.classList.contains('active')) {
+          btn.style.color = 'var(--green-medium)';
+          btn.style.background = 'rgba(16, 185, 129, 0.1)';
+        } else {
+          btn.style.color = '';
+          btn.style.background = '';
+        }
+      });
+    }
+  });
+}
+
+// Voice recognition for the microphone button
+function initVoiceInput(chatInput) {
+  const micBtn = document.querySelector('.prompt-toolbar-right .prompt-tool-btn[title="Voice input"]');
+  if (!micBtn) return;
+
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    micBtn.addEventListener('click', () => {
+      alert('Voice input is not supported in your browser. Please use Chrome or Edge.');
+    });
+    return;
+  }
+
+  let recognition = null;
+  let isListening = false;
+
+  micBtn.addEventListener('click', () => {
+    if (isListening) {
+      // Stop listening
+      recognition.stop();
+      return;
+    }
+
+    recognition = new SpeechRecognition();
+    recognition.lang = window.HONORE_CURRENT_LANG === 'fr' ? 'fr-FR' : 'en-US';
+    recognition.interimResults = true;
+    recognition.continuous = false;
+
+    recognition.onstart = () => {
+      isListening = true;
+      micBtn.style.color = '#ef4444';
+      micBtn.style.animation = 'pulse 1s infinite';
+      chatInput.placeholder = '🎤 Listening...';
+    };
+
+    recognition.onresult = (event) => {
+      let transcript = '';
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        transcript += event.results[i][0].transcript;
+      }
+      chatInput.value = transcript;
+    };
+
+    recognition.onend = () => {
+      isListening = false;
+      micBtn.style.color = '';
+      micBtn.style.animation = '';
+      chatInput.placeholder = "Hi! I'm Honore's AI assistant. Ask me anything about my work.";
+
+      // Auto-submit if we got text
+      if (chatInput.value.trim()) {
+        const form = document.getElementById('ai-form');
+        if (form) form.dispatchEvent(new Event('submit', { cancelable: true }));
+      }
+    };
+
+    recognition.onerror = (event) => {
+      isListening = false;
+      micBtn.style.color = '';
+      micBtn.style.animation = '';
+      chatInput.placeholder = "Hi! I'm Honore's AI assistant. Ask me anything about my work.";
+      console.error('Speech recognition error:', event.error);
+    };
+
+    recognition.start();
+  });
 }
 
 const quotes = [
@@ -1086,7 +1179,12 @@ function createAccessibilityPanel() {
   `;
 
   // Add to page
-  document.body.appendChild(accessBtn);
+  const navLinksContainer = document.querySelector('.nav-links');
+  if (navLinksContainer) {
+    navLinksContainer.appendChild(accessBtn);
+  } else {
+    document.body.appendChild(accessBtn);
+  }
   document.body.appendChild(panel);
 
   // Add event listeners
@@ -1293,8 +1391,11 @@ function initContactForm() {
     // UI Feedback: Loading
     const submitBtn = contactForm.querySelector('button[type="submit"]');
     const originalBtnText = submitBtn.textContent;
+    const currentLang = window.HONORE_CURRENT_LANG || 'en';
+    const t = HONORE_TRANSLATIONS[currentLang];
+
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Sending...';
+    submitBtn.textContent = currentLang === 'fr' ? 'Envoi...' : 'Sending...';
     contactStatus.textContent = '';
     contactStatus.style.color = 'var(--cyan)';
 
@@ -1307,13 +1408,13 @@ function initContactForm() {
       if (error) throw error;
 
       // Success
-      contactStatus.textContent = 'Message sent successfully! Thank you for reaching out.';
+      contactStatus.textContent = t["msg-success"] || 'Message sent successfully!';
       contactStatus.style.color = 'var(--green-dark)';
       contactForm.reset();
-} catch (error) {
+    } catch (error) {
       console.error('Supabase error:', error);
-      contactStatus.textContent = 'Error sending message. Please try again later.';
-      contactStatus.style.color = '#ff4b2b'; // Red for error
+      contactStatus.textContent = t["msg-error"] || 'Error sending message.';
+      contactStatus.style.color = '#ff4b2b'; 
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = originalBtnText;
@@ -1382,20 +1483,31 @@ if ('speechSynthesis' in window) {
   availableVoices = window.speechSynthesis.getVoices();
 }
 
-function setMaleVoice(msg) {
+function setVoiceByLang(msg) {
+  const lang = window.HONORE_CURRENT_LANG || 'en';
   if (availableVoices.length === 0) availableVoices = window.speechSynthesis.getVoices();
-  // Try to find a male English voice (David, Mark, Guy, Daniel, Matthew, etc)
-  const maleVoice = availableVoices.find(v => 
-    v.lang.startsWith('en') && 
-    (v.name.toLowerCase().includes('male') || 
-     v.name.toLowerCase().includes('david') || 
-     v.name.toLowerCase().includes('mark') || 
-     v.name.toLowerCase().includes('guy') || 
-     v.name.toLowerCase().includes('daniel') || 
-     v.name.toLowerCase().includes('matthew'))
-  );
-  if (maleVoice) {
-    msg.voice = maleVoice;
+  
+  let voice;
+  if (lang === 'fr') {
+    // Find a French voice (Thomas, Paul, etc)
+    voice = availableVoices.find(v => v.lang.startsWith('fr'));
+    msg.lang = 'fr-FR';
+  } else {
+    // Find a male English voice
+    voice = availableVoices.find(v => 
+      v.lang.startsWith('en') && 
+      (v.name.toLowerCase().includes('male') || 
+       v.name.toLowerCase().includes('david') || 
+       v.name.toLowerCase().includes('mark') || 
+       v.name.toLowerCase().includes('guy') || 
+       v.name.toLowerCase().includes('daniel') || 
+       v.name.toLowerCase().includes('matthew'))
+    );
+    msg.lang = 'en-US';
+  }
+  
+  if (voice) {
+    msg.voice = voice;
   }
 }
 
@@ -1403,15 +1515,21 @@ function toggleScreenReader() {
   const toggle = document.getElementById('screen-reader-toggle');
   screenReaderEnabled = toggle ? toggle.checked : false;
   
-  if (screenReaderEnabled) {
+    if (screenReaderEnabled) {
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
-      const msg = new SpeechSynthesisUtterance('Screen reader enabled. Scroll the page or hover to listen.');
-      setMaleVoice(msg);
+      const lang = window.HONORE_CURRENT_LANG || 'en';
+      const welcomeMsg = lang === 'fr' 
+        ? 'Lecteur d\'écran activé. Je lirai le contenu au fur et à mesure que vous faites défiler ou survolez.'
+        : 'Screen reader enabled. I will read content as you scroll or hover.';
+      
+      const msg = new SpeechSynthesisUtterance(welcomeMsg);
+      setVoiceByLang(msg);
       window.speechSynthesis.speak(msg);
       
       document.body.addEventListener('mouseover', screenReaderHoverHandler);
       document.body.addEventListener('mouseout', screenReaderOutHandler);
+      document.addEventListener('click', stopReadingGlobal);
       setupScrollReader();
     } else {
       alert("Text-to-speech is not supported by your browser.");
@@ -1421,63 +1539,339 @@ function toggleScreenReader() {
   } else {
     document.body.removeEventListener('mouseover', screenReaderHoverHandler);
     document.body.removeEventListener('mouseout', screenReaderOutHandler);
+    document.removeEventListener('click', stopReadingGlobal);
     if ('speechSynthesis' in window) window.speechSynthesis.cancel();
     if (screenReaderObserver) screenReaderObserver.disconnect();
+    document.querySelectorAll('.reading-focus').forEach(el => el.classList.remove('reading-focus'));
   }
   
   saveAccessibilitySettings();
 }
 
+function stopReadingGlobal() {
+  if (screenReaderEnabled && 'speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    document.querySelectorAll('.reading-focus').forEach(el => el.classList.remove('reading-focus'));
+  }
+}
+
 function setupScrollReader() {
   if (screenReaderObserver) screenReaderObserver.disconnect();
   
-  // Create an Intersection Observer that triggers when elements become fully visible on screen
   screenReaderObserver = new IntersectionObserver((entries) => {
     if (!screenReaderEnabled) return;
     
     entries.forEach(entry => {
+       // Read when element is somewhat visible (threshold 0.5)
        if (entry.isIntersecting && entry.target.innerText && entry.target.innerText.trim().length > 0) {
+          // Speak the text
           const msg = new SpeechSynthesisUtterance(entry.target.innerText.trim());
-          setMaleVoice(msg);
+          setVoiceByLang(msg);
           
-          msg.onstart = () => { if (entry.target.classList) entry.target.classList.add('reading-focus'); };
-          msg.onend = () => { if (entry.target.classList) entry.target.classList.remove('reading-focus'); };
-          msg.onerror = () => { if (entry.target.classList) entry.target.classList.remove('reading-focus'); };
+          msg.onstart = () => { entry.target.classList.add('reading-focus'); };
+          msg.onend = () => { entry.target.classList.remove('reading-focus'); };
+          msg.onerror = () => { entry.target.classList.remove('reading-focus'); };
           
           window.speechSynthesis.speak(msg);
           
-          // Unobserve so it doesn't read again if they scroll up and down repeatedly
+          // Unobserve to prevent repeat on same element, 
+          // allowing smooth "continue scrolling" experience
           screenReaderObserver.unobserve(entry.target);
        }
     });
-  }, { threshold: 0.8, rootMargin: '0px 0px -15% 0px' });
+  }, { threshold: 0.5, rootMargin: '0px 0px -10% 0px' });
   
-  // Observe all paragraphs and headings that the user might scroll to
-  document.querySelectorAll('h1, h2, h3, h4, p').forEach(el => {
+  // Observe all content blocks for a continuous experience
+  document.querySelectorAll('h1, h2, h3, h4, p, .card, ul li').forEach(el => {
      screenReaderObserver.observe(el);
   });
 }
 
 function screenReaderHoverHandler(e) {
   if (!screenReaderEnabled) return;
-  const target = e.target;
-  const tagsToRead = ['P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'LI', 'A', 'BUTTON', 'SPAN', 'STRONG', 'SMALL'];
+  const target = e.target.closest('p, h1, h2, h3, h4, h5, h6, li, button, .card');
+  if (!target) return;
   
-  if (tagsToRead.includes(target.tagName) && target.innerText && target.innerText.trim().length > 0) {
+  if (target.innerText && target.innerText.trim().length > 0) {
+    // Only read if it's not already being read
+    if (target.classList.contains('reading-focus')) return;
+
     window.speechSynthesis.cancel();
+    document.querySelectorAll('.reading-focus').forEach(el => el.classList.remove('reading-focus'));
+
     const msg = new SpeechSynthesisUtterance(target.innerText.trim());
-    setMaleVoice(msg);
-    window.speechSynthesis.speak(msg);
-    if (target.classList) target.classList.add('reading-focus');
+    setVoiceByLang(msg);
     
-    // Stop the scroll observer from reading this element again since we hovered it
+    msg.onstart = () => { target.classList.add('reading-focus'); };
+    msg.onend = () => { target.classList.remove('reading-focus'); };
+    
+    window.speechSynthesis.speak(msg);
     if (screenReaderObserver) screenReaderObserver.unobserve(target);
   }
 }
 
 function screenReaderOutHandler(e) {
-  const target = e.target;
-  if (target.classList) target.classList.remove('reading-focus');
+  // We keep the focus until the speech ends, handled by onend
 }
 
+
 function initNavScroll() { const nav = document.querySelector('.nav'); if (!nav) return; const handleScroll = () => { if (window.scrollY > 50) nav.classList.add('scrolled'); else nav.classList.remove('scrolled'); }; window.addEventListener('scroll', handleScroll); handleScroll(); }
+
+function initAccessibilityFeatures() {
+  const accBtn = document.getElementById('acc-btn');
+  const accDropdown = document.getElementById('acc-dropdown');
+  const toggle = document.getElementById('screen-reader-toggle');
+  
+  // Font controls
+  const fontPlus = document.getElementById('font-plus');
+  const fontMinus = document.getElementById('font-minus');
+  const fontDisplay = document.getElementById('font-display');
+  let currentFontSize = parseInt(localStorage.getItem('honore-font-size')) || 100;
+
+  // Language controls
+  const langBtns = document.querySelectorAll('.lang-btn');
+
+  if (accBtn && accDropdown) {
+    accBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      accDropdown.classList.toggle('active');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!accDropdown.contains(e.target)) {
+        accDropdown.classList.remove('active');
+      }
+    });
+  }
+
+  // Handle Font Changes
+  if (fontPlus && fontMinus && fontDisplay) {
+    const updateFontSize = (newSize) => {
+      currentFontSize = Math.min(Math.max(newSize, 80), 130);
+      document.documentElement.style.fontSize = `${(currentFontSize / 100) * 14}px`; // Base is 14px
+      fontDisplay.textContent = `${currentFontSize}%`;
+      localStorage.setItem('honore-font-size', currentFontSize);
+    };
+
+    updateFontSize(currentFontSize); // Apply initial
+
+    fontPlus.addEventListener('click', () => updateFontSize(currentFontSize + 10));
+    fontMinus.addEventListener('click', () => updateFontSize(currentFontSize - 10));
+  }
+
+  // Handle Language Clicks
+  langBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      langBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const lang = btn.getAttribute('data-lang');
+      localStorage.setItem('honore-lang', lang);
+      applyTranslations(lang);
+    });
+  });
+
+  // Dynamic Font Loader logic
+  const loadGoogleFont = (fontName) => {
+    const fontId = `font-link-${fontName.replace(/\s+/g, '-').toLowerCase()}`;
+    if (!document.getElementById(fontId)) {
+      const link = document.createElement('link');
+      link.id = fontId;
+      link.rel = 'stylesheet';
+      link.href = `https://fonts.googleapis.com/css2?family=${fontName.replace(/\s+/g, '+')}:wght@400;700&display=swap`;
+      document.head.appendChild(link);
+    }
+  };
+
+  const fontTypeSelector = document.getElementById('font-type-selector');
+  if (fontTypeSelector) {
+    const applyFont = (fontName) => {
+      // Handle standard system fonts specially
+      const systemFonts = ['Serif', 'Sans-Serif', 'Monospace'];
+      if (!systemFonts.includes(fontName)) {
+        loadGoogleFont(fontName);
+      }
+      
+      // Clear existing font family style on body
+      document.body.style.fontFamily = fontName === 'System Default' ? '' : `'${fontName}', sans-serif`;
+      
+      // Specifically handle serif/mono if requested
+      if (fontName.toLowerCase().includes('serif') && !fontName.includes('Sans')) {
+         document.body.style.fontFamily = `'${fontName}', serif`;
+      } else if (fontName.toLowerCase().includes('mono')) {
+         document.body.style.fontFamily = `'${fontName}', monospace`;
+      }
+      
+      localStorage.setItem('honore-font-type', fontName);
+    };
+
+    fontTypeSelector.addEventListener('change', (e) => {
+      applyFont(e.target.value);
+    });
+
+    const savedFont = localStorage.getItem('honore-font-type') || 'Outfit';
+    fontTypeSelector.value = savedFont;
+    applyFont(savedFont);
+  }
+
+  const savedLang = localStorage.getItem('honore-lang') || 'en';
+  applyTranslations(savedLang);
+  langBtns.forEach(btn => {
+    if (btn.getAttribute('data-lang') === savedLang) btn.classList.add('active');
+    else btn.classList.remove('active');
+  });
+
+  if (toggle) {
+    loadAccessibilitySettings();
+    toggle.addEventListener('change', toggleScreenReader);
+  }
+}
+
+const HONORE_TRANSLATIONS = {
+  en: {
+    "nav-home": "Home",
+    "nav-about": "About",
+    "nav-roles": "Roles",
+    "nav-dev": "Development",
+    "nav-edu": "Education",
+    "nav-proj": "Projects",
+    "nav-cv": "CV",
+    "nav-min": "Ministry",
+    "acc-language": "Language / Langue",
+    "acc-font-size": "Font Size",
+    "acc-font-type": "Font Type",
+    "acc-reader": "Screen Reader",
+    "acc-enable-tts": "Enable Text-to-Speech",
+    "chat-greeting": "Hi! I'm Honore's AI assistant. Ask me anything about my work.",
+    "chat-placeholder": "Ask me anything about Honore...",
+    "hero-title": "Tuyishime Honore",
+    "hero-subtitle": "Academic Registrar | Software Developer | Educator",
+    "contact-btn": "Get in Touch",
+    "about-title": "About Me",
+    "services-title": "My Services",
+    "service-reg": "Academic Registration",
+    "service-dev": "Full-Stack Development",
+    "service-edu": "ICT Training",
+    "prof-title": "Who is Tuyishime Honore?",
+    "prof-desc": "Honore is a dedicated developer, teacher, and ICT professional committed to educational excellence.",
+    "skills-title": "Professional Skills",
+    "footer-brand": "Educator • Innovator • Leader",
+    "footer-links": "Quick Links",
+    "footer-roles": "Professional Roles",
+    "footer-contact": "Get In Touch",
+    "form-name": "Your Name",
+    "form-email": "Your Email",
+    "form-msg": "Your Message",
+    "form-send": "Send Message",
+    "msg-success": "Message sent successfully!",
+    "msg-error": "Something went wrong. Please try again.",
+    "cv-fact-name": "Full Name",
+    "cv-fact-role": "Current Role",
+    "cv-fact-path": "Academic Path",
+    "cv-fact-loc": "Location",
+    "cv-hub-title": "Interactive Document Center",
+    "cv-cv-desc": "My full, up-to-date professional CV detailing work experience, academic history, skills, languages, publications, and references.",
+    "btn-view": "View CV",
+    "btn-download": "Download",
+    "proj-subtitle": "Innovative web applications and digital platforms developed to revolutionize educational planning and student engagement.",
+    "proj-dlp-title": "Digital Lesson Plan",
+    "proj-dlp-desc": "A sophisticated lesson-planning web application designed to empower teachers with efficient building, organization, and sharing tools for standards-aligned curricula.",
+    "proj-hub-title": "ICT Education Hub",
+    "proj-hub-desc": "An influential YouTube channel dedicated to pedagogical digital transformation. Features expert tutorials and tutorials for seamless technology integration in modern classrooms.",
+    "proj-marks-title": "Marks Management System",
+    "proj-marks-desc": "A web application that helps teachers generate report cards and other related reports after assessments.",
+    "btn-launch": "Launch Application",
+    "btn-explore": "Explore Channel",
+    "about-subtitle": "Dedicated to transforming education in Rwanda through innovative technology integration, empowering both teachers and students with the digital skills needed for a brighter future.",
+    "about-card-bg": "Background",
+    "about-card-edu": "Education & Growth",
+    "about-card-train": "Training & Impact",
+    "about-card-tech": "Technical Expertise",
+    "about-card-lang": "Languages",
+    "about-card-contact": "Personal & Contact",
+    "about-card-hobbies": "Hobbies & Interests"
+  },
+  fr: {
+    "nav-home": "Accueil",
+    "nav-about": "À Propos",
+    "nav-roles": "Rôles",
+    "nav-dev": "Développement",
+    "nav-edu": "Éducation",
+    "nav-proj": "Projets",
+    "nav-cv": "CV",
+    "nav-min": "Ministère",
+    "acc-language": "Langue / Language",
+    "acc-font-size": "Taille de police",
+    "acc-font-type": "Type de police",
+    "acc-reader": "Lecteur d'écran",
+    "acc-enable-tts": "Activer la synthèse vocale",
+    "chat-greeting": "Bonjour ! Je suis l'assistant IA d'Honore. Posez-moi des questions sur mon travail.",
+    "chat-placeholder": "Posez-moi des questions sur Honore...",
+    "hero-title": "Tuyishime Honore",
+    "hero-subtitle": "Registraire Académique | Développeur Logiciel | Éducateur",
+    "contact-btn": "Contactez-moi",
+    "about-title": "À Propos de Moi",
+    "services-title": "Mes Services",
+    "service-reg": "Gestion Académique",
+    "service-dev": "Développement Full-Stack",
+    "service-edu": "Formation en TIC",
+    "prof-title": "Qui est Tuyishime Honore ?",
+    "prof-desc": "Honore est un développeur, enseignant et professionnel des TIC dévoué, engagé envers l'excellence éducative.",
+    "skills-title": "Compétences Professionnelles",
+    "footer-brand": "Éducateur • Innovateur • Leader",
+    "footer-links": "Liens Rapides",
+    "footer-roles": "Rôles Professionnels",
+    "footer-contact": "Contactez-moi",
+    "form-name": "Votre Nom",
+    "form-email": "Votre Email",
+    "form-msg": "Votre Message",
+    "form-send": "Envoyer le Message",
+    "msg-success": "Message envoyé avec succès !",
+    "msg-error": "Une erreur est survenue. Veuillez réessayer.",
+    "cv-fact-name": "Nom Complet",
+    "cv-fact-role": "Rôle Actuel",
+    "cv-fact-path": "Parcours Académique",
+    "cv-fact-loc": "Emplacement",
+    "cv-hub-title": "Centre de Documents Interactif",
+    "cv-cv-desc": "Mon CV professionnel complet et à jour détaillant l'expérience de travail, le parcours académique, les compétences, les langues, les publications et les références.",
+    "btn-view": "Voir le CV",
+    "btn-download": "Télécharger",
+    "proj-subtitle": "Applications web innovantes et plateformes numériques développées pour révolutionner la planification pédagogique et l'engagement des étudiants.",
+    "proj-dlp-title": "Plan de Leçon Numérique",
+    "proj-dlp-desc": "Une application web de planification de leçons sophistiquée conçue pour autonomiser les enseignants avec des outils de construction, d'organisation et de partage efficaces pour des programmes alignés sur les normes.",
+    "proj-hub-title": "Hub d'Éducation TIC",
+    "proj-hub-desc": "Une chaîne YouTube influente dédiée à la transformation numérique pédagogique. Propose des tutoriels d'experts pour une intégration technologique transparente dans les classes modernes.",
+    "proj-marks-title": "Système de Gestion des Notes",
+    "proj-marks-desc": "Une application web qui aide les enseignants à générer des bulletins scolaires et d'autres rapports connexes après les évaluations.",
+    "btn-launch": "Lancer l'Application",
+    "btn-explore": "Explorer la Chaîne",
+    "about-subtitle": "Dédié à la transformation de l'éducation au Rwanda grâce à l'intégration de technologies innovantes, autonomisant les enseignants et les étudiants avec les compétences numériques nécessaires pour un avenir meilleur.",
+    "about-card-bg": "Parcours",
+    "about-card-edu": "Éducation et Croissance",
+    "about-card-train": "Formation et Impact",
+    "about-card-tech": "Expertise Technique",
+    "about-card-lang": "Langues",
+    "about-card-contact": "Personnel et Contact",
+    "about-card-hobbies": "Loisirs et Intérêts"
+  }
+};
+
+function applyTranslations(lang) {
+  const elements = document.querySelectorAll("[data-i18n]");
+  const t = HONORE_TRANSLATIONS[lang];
+  elements.forEach((el) => {
+    const key = el.getAttribute("data-i18n");
+    if (HONORE_TRANSLATIONS[lang] && HONORE_TRANSLATIONS[lang][key]) {
+      // Handle normal text
+      if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
+        el.placeholder = HONORE_TRANSLATIONS[lang][key];
+      } else {
+        el.textContent = t[key];
+      }
+    }
+  });
+
+  // Update specific UI components if they don't have data-i18n yet
+  const chatInput = document.querySelector('.chat-input textarea');
+  if (chatInput) chatInput.placeholder = t['chat-greeting'];
+}
+
