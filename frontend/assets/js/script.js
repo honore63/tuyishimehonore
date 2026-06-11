@@ -1802,7 +1802,9 @@ const HONORE_TRANSLATIONS = {
     "faq-q2": "Where can I find Honore's latest projects?",
     "faq-a2": "All active projects, including the Digital Lesson Plan and ICT Hub, are showcased in the <a href=\"projects.html\">Projects Showcase</a>.",
     "faq-q3": "Is Honore available for professional consultations?",
-    "faq-a3": "Yes, Honore provides consultations on EdTech and school digitization. Connect with him through the <i class=\"fa-brands fa-whatsapp\"></i> WhatsApp Channel."
+    "faq-a3": "Yes, Honore provides consultations on EdTech and school digitization. Connect with him through the <i class=\"fa-brands fa-whatsapp\"></i> WhatsApp Channel.",
+    "faq-q4": "Where can I watch Honore's preaching and homiletics lessons?",
+    "faq-a4": "You can reach out to Honore and watch his homiletics lessons and preaching at Promise Bible Center (PBC) on this <a href=\"https://youtu.be/9FSDNYlUieU?si=j-H62Ybqfr5esCMJ\" target=\"_blank\">YouTube link</a>."
   },
   fr: {
     "nav-home": "Accueil",
@@ -1879,7 +1881,9 @@ const HONORE_TRANSLATIONS = {
     "faq-q2": "Où puis-je trouver les derniers projets de Honore ?",
     "faq-a2": "Tous les projets actifs, y compris le Plan de Leçon Numérique et le Hub TIC, sont présentés dans la section <a href=\"projects.html\">Projets</a>.",
     "faq-q3": "Est-ce que Honore est disponible pour des consultations professionnelles ?",
-    "faq-a3": "Oui, Honore propose des consultations sur l'EdTech et la numérisation des écoles. Connectez-vous avec lui via la chaîne WhatsApp <i class=\"fa-brands fa-whatsapp\"></i>."
+    "faq-a3": "Oui, Honore propose des consultations sur l'EdTech et la numérisation des écoles. Connectez-vous avec lui via la chaîne WhatsApp <i class=\"fa-brands fa-whatsapp\"></i>.",
+    "faq-q4": "Où puis-je regarder les prédications et les leçons d'homilétique d'Honore ?",
+    "faq-a4": "Vous pouvez contacter Honore et visionner ses leçons d'homilétique et ses prédications au Promise Bible Center (PBC) sur ce <a href=\"https://youtu.be/9FSDNYlUieU?si=j-H62Ybqfr5esCMJ\" target=\"_blank\">lien YouTube</a>."
   }
 };
 

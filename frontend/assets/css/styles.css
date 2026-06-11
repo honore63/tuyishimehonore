@@ -880,10 +880,11 @@ header.compact {
 
 /* === Footer === */
 .site-footer {
-  background: #020617;
+  background: var(--green-dark);
   color: #f8fafc;
   padding: 5rem 0 2rem;
   margin-top: 5rem;
+  border-top: 4px solid var(--green-medium);
 }
 
 .footer-grid-4 {
@@ -1662,15 +1663,15 @@ input { display: none; }
 }
 
 .faq-item {
-  background: rgba(255,255,255,0.03);
+  background: rgba(255,255,255,0.05);
   padding: 1.5rem;
   border-radius: 15px;
-  border: 1px solid rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
   transition: all 0.3s ease;
 }
 
 .faq-item:hover {
-  background: rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.1);
   transform: translateY(-5px);
 }
 
