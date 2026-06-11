@@ -1788,7 +1788,13 @@ const HONORE_TRANSLATIONS = {
     "about-card-tech": "Technical Expertise",
     "about-card-lang": "Languages",
     "about-card-contact": "Personal & Contact",
-    "about-card-hobbies": "Hobbies & Interests"
+    "about-card-hobbies": "Hobbies & Interests",
+    "prof-job": "Teacher | ICT Trainer | Education Technology Advocate",
+    "prof-intro": "I am a passionate educator dedicated to transforming education in Rwanda through the integration of Information and Communication Technology (ICT) in teaching and learning.",
+    "prof-current": "I currently serve as a teacher at Rukara Model School of Sciences and Mathematics and I am a student of Computer Science and Physics Education at Kigali Independent University (ULK), Gisenyi Campus.",
+    "prof-trainer": "I also work as an ICT Trainer at PiSquare with the support of Edify, where I train teachers and students in digital skills and technology integration. In addition, I facilitate Continuous Professional Development (CPD) at my school, helping teachers integrate ICT into teaching and learning.",
+    "prof-training": "I have participated in several professional trainings including the Primary Teaching Residency Program Pilot, facilitated by Florida State University, Bridge2Rwanda, Inspire Educator and Empower Rwanda (IEE), Rainwater Charitable Foundation, Ministry of Education Rwanda, and Rwanda Basic Education Board (REB).",
+    "prof-ministry": "Beyond education, I am dedicated to serving God and the community through transformational teaching, discipleship, and a heart-led commitment to service, as commissioned in the Holy Scriptures:"
   },
   fr: {
     "nav-home": "Accueil",
@@ -1851,7 +1857,13 @@ const HONORE_TRANSLATIONS = {
     "about-card-tech": "Expertise Technique",
     "about-card-lang": "Langues",
     "about-card-contact": "Personnel et Contact",
-    "about-card-hobbies": "Loisirs et Intérêts"
+    "about-card-hobbies": "Loisirs et Intérêts",
+    "prof-job": "Enseignant | Formateur TIC | Défenseur des Technologies de l'Éducation",
+    "prof-intro": "Je suis un éducateur passionné dédié à la transformation de l'éducation au Rwanda grâce à l'intégration des technologies de l'information et de la communication (TIC) dans l'enseignement et l'apprentissage.",
+    "prof-current": "Je sers actuellement comme enseignant à la Rukara Model School of Sciences and Mathematics et je suis étudiant en enseignement de l'informatique et de la physique à l'Université Indépendante de Kigali (ULK), campus de Gisenyi.",
+    "prof-trainer": "Je travaille également comme formateur TIC chez PiSquare avec le soutien d'Edify, où je forme des enseignants et des étudiants aux compétences numériques et à l'intégration technologique. De plus, je facilite le développement professionnel continu (CPD) dans mon école, aidant les enseignants à intégrer les TIC.",
+    "prof-training": "J'ai participé à plusieurs formations professionnelles, notamment le programme pilote de résidence pour l'enseignement primaire (PTRP), facilité par l'Université d'État de Floride, Bridge2Rwanda, Inspire Educator and Empower Rwanda (IEE), la Rainwater Charitable Foundation, le ministère de l'Éducation du Rwanda et le Rwanda Basic Education Board (REB).",
+    "prof-ministry": "Au-delà de l'éducation, je me consacre à servir Dieu et la communauté par un enseignement transformationnel, le discipulat et un engagement de service guidé par le cœur, comme commissionné dans les Saintes Écritures :"
   }
 };
 
