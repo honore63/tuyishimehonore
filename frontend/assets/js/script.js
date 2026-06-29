@@ -127,6 +127,11 @@ function initChatSystem() {
   // Initialize preview button functionality for personal testimony
   initPreview();
   initNavScroll();
+
+  // Load custom content edits dynamically from local storage / Admin updates
+  const loaderScript = document.createElement('script');
+  loaderScript.src = 'assets/js/contentLoader.js';
+  document.body.appendChild(loaderScript);
 }
 
 function initMobileMenu() {
@@ -1400,6 +1405,20 @@ function initContactForm() {
     contactStatus.style.color = 'var(--cyan)';
 
     try {
+      // Save locally for admin dashboard redundancy
+      try {
+        const localMsgs = JSON.parse(localStorage.getItem('admin_messages') || '[]');
+        localMsgs.push({
+          name: data.name,
+          email: data.email,
+          message: data.message,
+          created_at: data.created_at || new Date().toISOString()
+        });
+        localStorage.setItem('admin_messages', JSON.stringify(localMsgs));
+      } catch (err) {
+        console.warn('Failed to save message to local storage:', err);
+      }
+
       // Use the global supabase client from supabaseClient.js
       const { error } = await supabase
         .from('contacts')

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Tuyishime Honore</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+  <link rel="icon" type="image/jpeg" href="../assets/images/WhatsApp%20Image%202026-05-29%20at%204.32.30%20PM.jpeg" />
+  <script>
+    const checkSession = () => {
+      const isLoggedIn = sessionStorage.getItem("admin_logged_in") === "true" || 
+                         localStorage.getItem("admin_logged_in") === "true";
+      if (!isLoggedIn) {
+        window.location.replace("index.html");
+      }
+    };
+    checkSession();
+  </script>
+</head>
+<body class="admin-body">
+
+  <aside class="admin-sidebar" id="admin-sidebar">
+    <div class="sidebar-header">
+      <img src="../assets/images/WhatsApp%20Image%202026-05-29%20at%204.32.30%20PM.jpeg" alt="Tuyishime Honore" class="sidebar-logo">
+      <h2>Honore Admin</h2>
+    </div>
+    
+    <div class="global-search-container" style="padding: 10px 15px;">
+      <input type="text" id="global-search" placeholder="Search everywhere..." class="form-control" style="border-radius: 20px; font-size: 0.85rem; padding: 0.6rem 1rem;">
+    </div>
+    
+    <ul class="sidebar-nav">
+      <li class="active" data-tab="tab-dashboard"><a href="#dashboard"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+      <li data-tab="tab-about"><a href="#about"><i class="fa-solid fa-user"></i> About Me</a></li>
+      <li data-tab="tab-roles"><a href="#roles"><i class="fa-solid fa-user-tie"></i> Roles</a></li>
+      <li data-tab="tab-development"><a href="#development"><i class="fa-solid fa-code"></i> Development</a></li>
+      <li data-tab="tab-education"><a href="#education"><i class="fa-solid fa-graduation-cap"></i> Education</a></li>
+      <li data-tab="tab-projects"><a href="#projects"><i class="fa-solid fa-folder-open"></i> Projects</a></li>
+      <li data-tab="tab-cv"><a href="#cv"><i class="fa-solid fa-file-pdf"></i> CV Management</a></li>
+      <li data-tab="tab-ministry"><a href="#ministry"><i class="fa-solid fa-cross"></i> Ministry</a></li>
+      <li data-tab="tab-contact"><a href="#contact"><i class="fa-solid fa-envelope"></i> Contact Messages</a></li>
+      <li data-tab="tab-media"><a href="#media"><i class="fa-solid fa-images"></i> Media Library</a></li>
+      <li data-tab="tab-activity"><a href="#activity"><i class="fa-solid fa-chart-line"></i> Activity Logs</a></li>
+      <li data-tab="tab-history"><a href="#history"><i class="fa-solid fa-clock-rotate-left"></i> Version History</a></li>
+      <li data-tab="tab-settings"><a href="#settings"><i class="fa-solid fa-gear"></i> Settings</a></li>
+      <li id="btn-logout"><a href="#logout" style="color: #f87171;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+    </ul>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-navbar">
+      <button class="nav-toggle-btn" id="sidebar-toggle" aria-label="Toggle Sidebar Menu"><i class="fa-solid fa-bars"></i></button>
+      <div class="navbar-welcome">
+        <h1>Welcome back, Honore 👋</h1>
+      </div>
+      <div class="navbar-user">
+        <img src="../assets/images/WhatsApp%20Image%202026-05-29%20at%204.32.30%20PM.jpeg" alt="Tuyishime Honore" class="admin-profile-pic">
+        <span>Admin (Tuyishime Honore)</span>
+      </div>
+    </header>
+
+    <div id="dynamic-sections">
+    <!-- SECTION: 🏠 Dashboard Home -->
+    <section id="tab-dashboard" class="dashboard-section active">
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-info"><h3>Total Sections</h3><div id="stat-sections-count">10</div></div><div class="stat-icon stat-blue"><i class="fa-solid fa-layer-group"></i></div></div>
+        <div class="stat-card"><div class="stat-info"><h3>Total Projects</h3><div id="stat-projects-count">0</div></div><div class="stat-icon stat-blue"><i class="fa-solid fa-folder-open"></i></div></div>
+        <div class="stat-card"><div class="stat-info"><h3>Total Roles</h3><div id="stat-roles-count">0</div></div><div class="stat-icon stat-blue"><i class="fa-solid fa-user-tie"></i></div></div>
+        <div class="stat-card"><div class="stat-info"><h3>Total Skills</h3><div id="stat-skills-count">0</div></div><div class="stat-icon stat-green"><i class="fa-solid fa-gears"></i></div></div>
+        <div class="stat-card"><div class="stat-info"><h3>Certificates</h3><div id="stat-certs-count">0</div></div><div class="stat-icon stat-purple"><i class="fa-solid fa-trophy"></i></div></div>
+        <div class="stat-card"><div class="stat-info"><h3>CV Uploads</h3><div id="stat-cv-count">1</div></div><div class="stat-icon stat-green"><i class="fa-solid fa-file-pdf"></i></div></div>
+        <div class="stat-card"><div class="stat-info"><h3>Ministry Posts</h3><div id="stat-ministry-count">0</div></div><div class="stat-icon stat-purple"><i class="fa-solid fa-cross"></i></div></div>
+        <div class="stat-card"><div class="stat-info"><h3>Contact Msgs</h3><div id="stat-messages-count">0</div></div><div class="stat-icon stat-orange"><i class="fa-solid fa-comments"></i></div></div>
+        <div class="stat-card"><div class="stat-info"><h3>Last Updated</h3><div id="stat-last-updated" style="font-size: 1.2rem;">Recently</div></div><div class="stat-icon stat-blue"><i class="fa-solid fa-clock-rotate-left"></i></div></div>
+        <div class="stat-card"><div class="stat-info"><h3>Last Login</h3><div id="stat-last-login" style="font-size: 1.2rem;">Recently</div></div><div class="stat-icon stat-orange"><i class="fa-solid fa-clock"></i></div></div>
+      </div>
+
+      <div class="admin-card">
+        <div class="card-title-bar">
+          <h2>Recent Messages</h2>
+          <button class="btn-sm btn-edit" onclick="document.querySelector('[data-tab=tab-contact]').click()">View All</button>
+        </div>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead><tr><th>Sender</th><th>Email</th><th>Message</th><th>Date</th></tr></thead>
+            <tbody id="recent-messages-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: 👤 About Me -->
+    <section id="tab-about" class="dashboard-section">
+      <div class="admin-card">
+        <div class="card-title-bar"><h2>Edit About Me</h2></div>
+        <form id="about-content-form">
+          <div class="form-group"><label>Name</label><input type="text" id="about-name" class="form-control" required></div>
+          <div class="form-group"><label>Professional Title</label><input type="text" id="about-title" class="form-control" required></div>
+          <div class="form-group"><label>Biography</label><textarea id="about-bio" class="form-control" rows="4"></textarea></div>
+          <div class="form-group"><label>Introduction</label><textarea id="about-intro" class="form-control" rows="3"></textarea></div>
+          <div class="form-group"><label>Mission Statement</label><textarea id="about-mission" class="form-control" rows="3"></textarea></div>
+          <div class="form-group"><label>Vision</label><textarea id="about-vision" class="form-control" rows="3"></textarea></div>
+          <div class="form-group"><label>Profile Picture URL</label><input type="text" id="about-pic" class="form-control"></div>
+          <div class="form-group"><label>Cover Image URL</label><input type="text" id="about-cover" class="form-control"></div>
+          <div style="display: flex; gap: 1rem;">
+             <div class="form-group" style="flex:1"><label>Resume Button Text</label><input type="text" id="about-res-btn" class="form-control"></div>
+             <div class="form-group" style="flex:1"><label>Social Media URLs (JSON)</label><input type="text" id="about-socials" class="form-control" placeholder='{"linkedin": "url"}'></div>
+          </div>
+          <div style="display: flex; justify-content: flex-end; margin-top: 1rem;"><button type="submit" class="admin-btn" style="width: auto; padding: 0.8rem 2.5rem;">Save Changes</button></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- SECTION: 👨‍💼 Roles -->
+    <section id="tab-roles" class="dashboard-section">
+      <div class="admin-card">
+        <div class="card-title-bar">
+          <h2>Manage Professional Roles</h2>
+          <button class="admin-btn" style="width:auto; padding:0.5rem 1.2rem;" onclick="openModal('modal-role')"><i class="fa-solid fa-plus"></i> Add Role</button>
+        </div>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead><tr><th>Icon</th><th>Title</th><th>Organization</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="roles-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: 💻 Development (Skills) -->
+    <section id="tab-development" class="dashboard-section">
+      <div class="admin-card">
+        <div class="card-title-bar">
+          <h2>Manage Development Skills</h2>
+          <button class="admin-btn" style="width:auto; padding:0.5rem 1.2rem;" onclick="openModal('modal-dev')"><i class="fa-solid fa-plus"></i> Add Tech</button>
+        </div>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead><tr><th>Icon</th><th>Name</th><th>Category</th><th>Proficiency</th><th>Exp</th><th>Actions</th></tr></thead>
+            <tbody id="dev-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: 🎓 Education -->
+    <section id="tab-education" class="dashboard-section">
+      <div class="admin-card">
+        <div class="card-title-bar">
+          <h2>Manage Education & Certificates</h2>
+          <button class="admin-btn" style="width:auto; padding:0.5rem 1.2rem;" onclick="openModal('modal-edu')"><i class="fa-solid fa-plus"></i> Add Education</button>
+        </div>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead><tr><th>School Name</th><th>Qualification</th><th>Dates</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="edu-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: 📂 Projects -->
+    <section id="tab-projects" class="dashboard-section">
+      <div class="admin-card">
+        <div class="card-title-bar">
+          <h2>Manage Projects</h2>
+          <button class="admin-btn" style="width:auto; padding:0.5rem 1.2rem;" onclick="openModal('modal-project')"><i class="fa-solid fa-plus"></i> Add Project</button>
+        </div>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead><tr><th>Title</th><th>Category</th><th>Status</th><th>Featured</th><th>Actions</th></tr></thead>
+            <tbody id="projects-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: 📄 CV -->
+    <section id="tab-cv" class="dashboard-section">
+      <div class="admin-card">
+        <div class="card-title-bar"><h2>Manage Resume / CV</h2></div>
+        <div style="margin-bottom: 2rem;">
+           <label>Upload New CV (PDF)</label>
+           <input type="file" id="cv-upload" class="form-control" accept=".pdf">
+           <button class="admin-btn" style="width: auto; margin-top: 1rem; padding: 0.6rem 1.2rem;" id="btn-upload-cv">Upload & Replace</button>
+        </div>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead><tr><th>Date Uploaded</th><th>Status</th><th>Downloads</th><th>Actions</th></tr></thead>
+            <tbody id="cv-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: ⛪ Ministry -->
+    <section id="tab-ministry" class="dashboard-section">
+      <div class="admin-card">
+        <div class="card-title-bar">
+          <h2>Manage Ministry Posts</h2>
+          <button class="admin-btn" style="width:auto; padding:0.5rem 1.2rem;" onclick="openModal('modal-ministry')"><i class="fa-solid fa-plus"></i> Add Post</button>
+        </div>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead><tr><th>Date</th><th>Title</th><th>Category</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="ministry-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: 📩 Contact -->
+    <section id="tab-contact" class="dashboard-section">
+      <div class="admin-card">
+        <div class="card-title-bar">
+          <h2>Contact Messages</h2>
+          <div>
+            <button class="btn-sm btn-edit" id="btn-export-msgs"><i class="fa-solid fa-download"></i> Export</button>
+            <button class="btn-sm btn-delete" id="btn-clear-msgs"><i class="fa-solid fa-trash-can"></i> Clear All</button>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead><tr><th>Date Time</th><th>Sender</th><th>Email</th><th>Message</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="messages-tbody-full"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: 🖼 Media Library -->
+    <section id="tab-media" class="dashboard-section">
+      <div class="admin-card">
+        <div class="card-title-bar">
+          <h2>Media Library</h2>
+          <button class="admin-btn" style="width:auto; padding:0.5rem 1.2rem;" id="btn-upload-media"><i class="fa-solid fa-upload"></i> Upload File</button>
+        </div>
+        <div id="media-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+           <p style="color:var(--admin-text-muted);">No media uploaded yet.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: 📈 Activity Logs -->
+    <section id="tab-activity" class="dashboard-section">
+      <div class="admin-card">
+        <div class="card-title-bar"><h2>System Activity Logs</h2></div>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead><tr><th>Time</th><th>User</th><th>Action Detail</th><th>Platform Info</th></tr></thead>
+            <tbody id="activity-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: 🕒 Version History -->
+    <section id="tab-history" class="dashboard-section">
+      <div class="admin-card">
+        <div class="card-title-bar"><h2>Content Version History</h2></div>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead><tr><th>Date</th><th>Section</th><th>Old Value Summary</th><th>Actions</th></tr></thead>
+            <tbody id="history-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: ⚙ Settings -->
+    <section id="tab-settings" class="dashboard-section">
+      <div class="admin-card">
+        <div class="card-title-bar"><h2>System Settings & SEO</h2></div>
+        <form id="settings-form">
+          <div class="form-group"><label>Website Name</label><input type="text" id="set-name" class="form-control"></div>
+          <div class="form-group"><label>Favicon URL</label><input type="text" id="set-favicon" class="form-control"></div>
+          <div class="form-group"><label>Theme Color (Hex)</label><input type="color" id="set-color" class="form-control" style="height: 50px;"></div>
+          <div class="form-group"><label>SEO Meta Description</label><textarea id="set-desc" class="form-control" rows="3"></textarea></div>
+          <div class="form-group"><label>Google Analytics ID</label><input type="text" id="set-ga" class="form-control"></div>
+          <hr style="margin: 2rem 0; border: none; border-bottom: 2px solid #edf2f7;"/>
+          <h3 style="margin-bottom: 1rem; color: var(--admin-primary);">Security</h3>
+          <div class="form-group"><label>New Admin Password</label><input type="password" id="set-pass" class="form-control"></div>
+          <div style="display: flex; justify-content: flex-end; margin-top: 1rem;"><button type="submit" class="admin-btn" style="width: auto; padding: 0.8rem 2.5rem;">Save Settings</button></div>
+        </form>
+      </div>
+    </section>
+    </div>
+  </main>
+
+  <div id="dynamic-modals">
+  <!-- Generic Modals for CMS -->
+  <div class="admin-modal" id="modal-role">
+    <div class="admin-modal-content">
+      <div class="admin-modal-header"><h3>Add/Edit Role</h3><button class="admin-modal-close" onclick="closeModal('modal-role')">&times;</button></div>
+      <form id="form-role">
+        <input type="hidden" id="role-id">
+        <div class="form-group"><label>Title</label><input type="text" id="role-title" class="form-control" required></div>
+        <div class="form-group"><label>Organization</label><input type="text" id="role-org" class="form-control" required></div>
+        <div class="form-group"><label>Icon (FontAwesome)</label><input type="text" id="role-icon" class="form-control" placeholder="fa-solid fa-user-tie"></div>
+        <div class="form-group"><label>Status</label><select id="role-status" class="form-control"><option value="Active">Active</option><option value="Inactive">Inactive</option></select></div>
+        <div class="admin-modal-footer"><button type="submit" class="admin-btn" style="width:auto">Save</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="admin-modal" id="modal-dev">
+    <div class="admin-modal-content">
+      <div class="admin-modal-header"><h3>Add/Edit Development Tech</h3><button class="admin-modal-close" onclick="closeModal('modal-dev')">&times;</button></div>
+      <form id="form-dev">
+        <input type="hidden" id="dev-id">
+        <div class="form-group"><label>Name</label><input type="text" id="dev-name" class="form-control" required></div>
+        <div class="form-group"><label>Icon HTML</label><input type="text" id="dev-icon" class="form-control" placeholder="<i class='fa-brands fa-js'></i>"></div>
+        <div class="form-group"><label>Description</label><textarea id="dev-desc" class="form-control" rows="2"></textarea></div>
+        <div class="form-group"><label>Category</label><input type="text" id="dev-cat" class="form-control" placeholder="Frontend, Backend, Database..." required></div>
+        <div style="display:flex;gap:1rem;">
+           <div class="form-group" style="flex:1"><label>Proficiency (%)</label><input type="number" id="dev-prof" class="form-control" min="0" max="100"></div>
+           <div class="form-group" style="flex:1"><label>Years Exp</label><input type="text" id="dev-exp" class="form-control"></div>
+        </div>
+        <div class="admin-modal-footer"><button type="submit" class="admin-btn" style="width:auto">Save</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="admin-modal" id="modal-edu">
+    <div class="admin-modal-content">
+      <div class="admin-modal-header"><h3>Add/Edit Education</h3><button class="admin-modal-close" onclick="closeModal('modal-edu')">&times;</button></div>
+      <form id="form-edu">
+        <input type="hidden" id="edu-id">
+        <div class="form-group"><label>School Name</label><input type="text" id="edu-school" class="form-control" required></div>
+        <div class="form-group"><label>Qualification</label><input type="text" id="edu-qual" class="form-control" required></div>
+        <div style="display:flex;gap:1rem;">
+           <div class="form-group" style="flex:1"><label>Start Date</label><input type="text" id="edu-start" class="form-control" placeholder="Oct 2020"></div>
+           <div class="form-group" style="flex:1"><label>End Date</label><input type="text" id="edu-end" class="form-control" placeholder="July 2023 or Present"></div>
+        </div>
+        <div class="form-group"><label>Description</label><textarea id="edu-desc" class="form-control" rows="2"></textarea></div>
+        <div class="form-group"><label>Location</label><input type="text" id="edu-loc" class="form-control"></div>
+        <div class="form-group"><label>Status</label><select id="edu-status" class="form-control"><option>Completed</option><option>Pursuing</option><option>Dropped</option></select></div>
+        <div class="admin-modal-footer"><button type="submit" class="admin-btn" style="width:auto">Save</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="admin-modal" id="modal-project">
+    <div class="admin-modal-content">
+      <div class="admin-modal-header"><h3>Add/Edit Project</h3><button class="admin-modal-close" onclick="closeModal('modal-project')">&times;</button></div>
+      <form id="form-project">
+        <input type="hidden" id="proj-id">
+        <div class="form-group"><label>Project Title</label><input type="text" id="proj-title" class="form-control" required></div>
+        <div class="form-group"><label>Description</label><textarea id="proj-desc" class="form-control" rows="3"></textarea></div>
+        <div class="form-group"><label>Technologies Used (CSV)</label><input type="text" id="proj-tech" class="form-control" placeholder="React, Node.js, Firebase"></div>
+        <div style="display:flex;gap:1rem;">
+           <div class="form-group" style="flex:1"><label>GitHub Link</label><input type="url" id="proj-git" class="form-control"></div>
+           <div class="form-group" style="flex:1"><label>Live Demo Link</label><input type="url" id="proj-live" class="form-control"></div>
+        </div>
+        <div class="form-group"><label>Image URL</label><input type="text" id="proj-img" class="form-control"></div>
+        <div style="display:flex;gap:1rem;">
+           <div class="form-group" style="flex:1"><label>Category</label><input type="text" id="proj-cat" class="form-control" required></div>
+           <div class="form-group" style="flex:1"><label>Status</label><select id="proj-status" class="form-control"><option>Completed</option><option>Ongoing</option></select></div>
+        </div>
+        <div class="form-group">
+            <label class="remember-me"><input type="checkbox" id="proj-feat"><span>Featured Project</span></label>
+        </div>
+        <div class="admin-modal-footer"><button type="submit" class="admin-btn" style="width:auto">Save</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="admin-modal" id="modal-ministry">
+    <div class="admin-modal-content">
+      <div class="admin-modal-header"><h3>Add/Edit Ministry Post</h3><button class="admin-modal-close" onclick="closeModal('modal-ministry')">&times;</button></div>
+      <form id="form-ministry">
+        <input type="hidden" id="min-id">
+        <div class="form-group"><label>Title</label><input type="text" id="min-title" class="form-control" required></div>
+        <div class="form-group"><label>Category</label><select id="min-cat" class="form-control"><option>Teaching</option><option>Sermon</option><option>Bible Study</option><option>Video</option><option>Quote</option><option>Article</option><option>Daily Devotion</option></select></div>
+        <div class="form-group"><label>Content</label><textarea id="min-content" class="form-control" rows="4"></textarea></div>
+        <div class="form-group"><label>Images / Cover URL</label><input type="text" id="min-img" class="form-control"></div>
+        <div style="display:flex;gap:1rem;">
+           <div class="form-group" style="flex:1"><label>Video Link</label><input type="url" id="min-vid" class="form-control"></div>
+           <div class="form-group" style="flex:1"><label>Bible References</label><input type="text" id="min-refs" class="form-control" placeholder="John 3:16"></div>
+        </div>
+        <div class="form-group"><label>Status</label><select id="min-status" class="form-control"><option value="Published">Published</option><option value="Draft">Draft</option></select></div>
+        <div class="admin-modal-footer"><button type="submit" class="admin-btn" style="width:auto">Save</button></div>
+      </form>
+    </div>
+  </div>
+  </div>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

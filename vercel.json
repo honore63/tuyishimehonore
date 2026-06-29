@@ -1,5 +1,9 @@
 {
   "rewrites": [
+    { "source": "/honore-admin", "destination": "/frontend/honore-admin/index.html" },
+    { "source": "/honore-admin/dashboard", "destination": "/frontend/honore-admin/dashboard.html" },
+    { "source": "/honore-admin/css/(.*)", "destination": "/frontend/honore-admin/css/$1" },
+    { "source": "/honore-admin/js/(.*)", "destination": "/frontend/honore-admin/js/$1" },
     { "source": "/", "destination": "/frontend/index.html" },
     { "source": "/about", "destination": "/frontend/about.html" },
     { "source": "/roles", "destination": "/frontend/roles.html" },
