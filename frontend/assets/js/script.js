@@ -127,11 +127,6 @@ function initChatSystem() {
   // Initialize preview button functionality for personal testimony
   initPreview();
   initNavScroll();
-
-  // Load custom content edits dynamically from local storage / Admin updates
-  const loaderScript = document.createElement('script');
-  loaderScript.src = 'assets/js/contentLoader.js';
-  document.body.appendChild(loaderScript);
 }
 
 function initMobileMenu() {
@@ -610,7 +605,7 @@ Assistant:
 Visitor: Can I download his CV?
 Assistant:
 Yes, you can download the CV here:
-../docs/Document/Honore curriculum vitae.pdf
+../docs/Certicifacates/Honore curriculum vitae ORG.pdf
 `;
 
 // Internal State
@@ -1405,20 +1400,6 @@ function initContactForm() {
     contactStatus.style.color = 'var(--cyan)';
 
     try {
-      // Save locally for admin dashboard redundancy
-      try {
-        const localMsgs = JSON.parse(localStorage.getItem('admin_messages') || '[]');
-        localMsgs.push({
-          name: data.name,
-          email: data.email,
-          message: data.message,
-          created_at: data.created_at || new Date().toISOString()
-        });
-        localStorage.setItem('admin_messages', JSON.stringify(localMsgs));
-      } catch (err) {
-        console.warn('Failed to save message to local storage:', err);
-      }
-
       // Use the global supabase client from supabaseClient.js
       const { error } = await supabase
         .from('contacts')
@@ -1796,8 +1777,8 @@ const HONORE_TRANSLATIONS = {
     "proj-dlp-desc": "A sophisticated lesson-planning web application designed to empower teachers with efficient building, organization, and sharing tools for standards-aligned curricula.",
     "proj-hub-title": "ICT Education Hub",
     "proj-hub-desc": "An influential YouTube channel dedicated to pedagogical digital transformation. Features expert tutorials and tutorials for seamless technology integration in modern classrooms.",
-    "proj-marks-title": "Marks Management System",
-    "proj-marks-desc": "A web application that helps teachers generate report cards and other related reports after assessments.",
+    "proj-marks-title": "RMS Marks Information System (RMS MIS)",
+    "proj-marks-desc": "A comprehensive school information platform for Rukara Model School featuring Examination Centre, Digital Library, Continuous Assessment, report cards generation, and performance analytics.",
     "btn-launch": "Launch Application",
     "btn-explore": "Explore Channel",
     "about-subtitle": "Dedicated to transforming education in Rwanda through innovative technology integration, empowering both teachers and students with the digital skills needed for a brighter future.",
@@ -1875,8 +1856,8 @@ const HONORE_TRANSLATIONS = {
     "proj-dlp-desc": "Une application web de planification de leçons sophistiquée conçue pour autonomiser les enseignants avec des outils de construction, d'organisation et de partage efficaces pour des programmes alignés sur les normes.",
     "proj-hub-title": "Hub d'Éducation TIC",
     "proj-hub-desc": "Une chaîne YouTube influente dédiée à la transformation numérique pédagogique. Propose des tutoriels d'experts pour une intégration technologique transparente dans les classes modernes.",
-    "proj-marks-title": "Système de Gestion des Notes",
-    "proj-marks-desc": "Une application web qui aide les enseignants à générer des bulletins scolaires et d'autres rapports connexes après les évaluations.",
+    "proj-marks-title": "Système d'Information des Notes RMS (RMS MIS)",
+    "proj-marks-desc": "Une plateforme scolaire complète pour Rukara Model School comprenant un centre d'examen, une bibliothèque numérique, l'évaluation continue et la génération de bulletins scolaires.",
     "btn-launch": "Lancer l'Application",
     "btn-explore": "Explorer la Chaîne",
     "about-subtitle": "Dédié à la transformation de l'éducation au Rwanda grâce à l'intégration de technologies innovantes, autonomisant les enseignants et les étudiants avec les compétences numériques nécessaires pour un avenir meilleur.",
