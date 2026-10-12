@@ -230,124 +230,340 @@
     </nav>
 
     <!-- ============ GALLERY SECTION ============ -->
-    <section id="gallery" class="section" aria-labelledby="gallery-title" style="padding-top: 4rem;">
-      <h2 id="gallery-title" class="section-title">📸 Gallery</h2>
-      <p class="section-subtitle">A glimpse into my professional life, classroom moments, and community engagements.</p>
+    <section id="gallery" class="section" aria-labelledby="gallery-title" style="padding-top: 4rem; padding-bottom: 5rem;">
 
-      <!-- Lightbox overlay -->
-      <div id="gallery-lightbox" onclick="closeLightbox()" style="
-          display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92);
-          z-index: 10000; align-items: center; justify-content: center; cursor: zoom-out;">
-        <button onclick="shiftLightbox(-1)" style="position: fixed; left: 1rem; top: 50%; transform: translateY(-50%);
-            background: rgba(255,255,255,0.15); border: none; color: #fff; font-size: 2rem;
-            width: 3rem; height: 3rem; border-radius: 50%; cursor: pointer; z-index: 10001;">&#8249;</button>
-        <img id="lightbox-img" src="" alt="" style="max-width: 90vw; max-height: 88vh; border-radius: 4px; box-shadow: 0 20px 60px rgba(0,0,0,0.8); object-fit: contain;" onclick="event.stopPropagation()">
-        <button onclick="shiftLightbox(1)" style="position: fixed; right: 1rem; top: 50%; transform: translateY(-50%);
-            background: rgba(255,255,255,0.15); border: none; color: #fff; font-size: 2rem;
-            width: 3rem; height: 3rem; border-radius: 50%; cursor: pointer; z-index: 10001;">&#8250;</button>
-        <button onclick="closeLightbox()" style="position: fixed; top: 1rem; right: 1rem;
-            background: rgba(255,255,255,0.15); border: none; color: #fff; font-size: 1.4rem;
-            width: 2.5rem; height: 2.5rem; border-radius: 50%; cursor: pointer; z-index: 10001;">✕</button>
+      <!-- Header -->
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <div style="display: inline-flex; align-items: center; gap: 0.6rem; background: rgba(103,232,249,0.1); border: 1px solid rgba(103,232,249,0.3); padding: 0.4rem 1rem; border-radius: 999px; margin-bottom: 1rem;">
+          <i class="fa-solid fa-camera-retro" style="color: #67e8f9; font-size: 0.85rem;"></i>
+          <span style="color: #67e8f9; font-size: 0.82rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;">Photo Gallery</span>
+        </div>
+        <h2 id="gallery-title" class="section-title" style="margin-bottom: 0.5rem;">Life in Frames</h2>
+        <p class="section-subtitle" style="margin-top: 0.5rem;">Milestones, academic achievements, and cherished moments captured on camera.</p>
       </div>
 
-      <!-- Gallery grid -->
-      <div class="gallery-grid" style="
+      <!-- Gallery Styles (scoped inline) -->
+      <style>
+        .g-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-          gap: 1rem; margin-top: 2rem;">
-        <div class="gallery-item" style="grid-column: span 2; grid-row: span 2; position: relative; overflow: hidden; border-radius: 4px; cursor: zoom-in; box-shadow: 0 8px 24px rgba(0,0,0,0.15);"
-             onclick="openLightbox(0)">
-          <img src="assets/images/gallery/photo-1.jpeg" alt="Honore Professional Photo" loading="lazy"
-               style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; display: block;"
-               onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-          <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(4,55,42,0.5) 0%, transparent 60%);"></div>
-          <div style="position: absolute; bottom: 0.8rem; left: 0.8rem; color: #fff; font-size: 0.8rem; font-weight: 700; text-shadow: 0 1px 4px rgba(0,0,0,0.8);">
-            <i class="fa-solid fa-camera"></i> Featured
-          </div>
+          grid-template-columns: repeat(4, 1fr);
+          grid-template-rows: auto;
+          gap: 0.75rem;
+        }
+        .g-item {
+          position: relative;
+          overflow: hidden;
+          border-radius: 8px;
+          cursor: zoom-in;
+          background: #0a1a14;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+        }
+        .g-item img {
+          width: 100%; height: 100%;
+          object-fit: cover;
+          display: block;
+          transition: transform 0.55s cubic-bezier(.25,.8,.25,1), filter 0.55s ease;
+          filter: brightness(0.92);
+        }
+        .g-item:hover img {
+          transform: scale(1.07);
+          filter: brightness(0.6);
+        }
+        .g-overlay {
+          position: absolute; inset: 0;
+          background: linear-gradient(to top, rgba(4,30,22,0.85) 0%, rgba(4,55,42,0.2) 50%, transparent 100%);
+          opacity: 1;
+          transition: opacity 0.4s ease;
+          display: flex; flex-direction: column; justify-content: flex-end;
+          padding: 1rem 1rem 0.9rem;
+          pointer-events: none;
+        }
+        .g-item:hover .g-overlay { opacity: 1; }
+        .g-overlay .g-badge {
+          display: inline-flex; align-items: center; gap: 0.3rem;
+          font-size: 0.65rem; font-weight: 800; letter-spacing: 1.2px;
+          text-transform: uppercase; padding: 0.2rem 0.55rem;
+          border-radius: 999px; width: fit-content;
+          margin-bottom: 0.4rem;
+          backdrop-filter: blur(4px);
+        }
+        .g-overlay .g-title {
+          color: #fff; font-weight: 700; font-size: 0.88rem;
+          line-height: 1.3; text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+          opacity: 0; transform: translateY(8px);
+          transition: opacity 0.35s ease 0.05s, transform 0.35s ease 0.05s;
+          margin: 0;
+        }
+        .g-overlay .g-sub {
+          color: rgba(255,255,255,0.72); font-size: 0.74rem; margin-top: 0.2rem;
+          opacity: 0; transform: translateY(6px);
+          transition: opacity 0.35s ease 0.1s, transform 0.35s ease 0.1s;
+        }
+        .g-item:hover .g-title,
+        .g-item:hover .g-sub { opacity: 1; transform: translateY(0); }
+        .g-zoom-icon {
+          position: absolute; top: 0.7rem; right: 0.7rem;
+          width: 2rem; height: 2rem; border-radius: 50%;
+          background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+          backdrop-filter: blur(6px);
+          display: flex; align-items: center; justify-content: center;
+          color: #fff; font-size: 0.75rem;
+          opacity: 0; transform: scale(0.8);
+          transition: opacity 0.3s ease, transform 0.3s ease;
+          pointer-events: none;
+        }
+        .g-item:hover .g-zoom-icon { opacity: 1; transform: scale(1); }
+        /* Featured (hero) item */
+        .g-item.featured { grid-column: span 2; grid-row: span 2; }
+        .g-item.featured img { min-height: 440px; }
+        .g-item.wide { grid-column: span 2; }
+        .g-item.wide img { height: 240px; }
+        .g-item:not(.featured):not(.wide) img { height: 210px; }
+
+        /* Lightbox */
+        #glb {
+          display: none; position: fixed; inset: 0;
+          background: rgba(2,12,8,0.96); z-index: 10000;
+          align-items: center; justify-content: center;
+          cursor: zoom-out; animation: lbFadeIn 0.2s ease;
+        }
+        @keyframes lbFadeIn { from{opacity:0} to{opacity:1} }
+        #glb-wrap {
+          position: relative; max-width: 90vw; max-height: 88vh;
+          animation: lbZoomIn 0.25s cubic-bezier(.34,1.56,.64,1);
+        }
+        @keyframes lbZoomIn { from{transform:scale(0.9);opacity:0} to{transform:scale(1);opacity:1} }
+        #glb-img {
+          max-width: 88vw; max-height: 84vh;
+          border-radius: 6px; box-shadow: 0 30px 80px rgba(0,0,0,0.9);
+          object-fit: contain; display: block;
+        }
+        #glb-caption {
+          position: absolute; bottom: -2.8rem; left: 0; right: 0;
+          text-align: center; color: rgba(255,255,255,0.65); font-size: 0.82rem;
+        }
+        .glb-btn {
+          position: fixed; top: 50%; transform: translateY(-50%);
+          background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25);
+          color: #fff; font-size: 1.6rem; width: 3rem; height: 3rem;
+          border-radius: 50%; cursor: pointer; z-index: 10001;
+          display: flex; align-items: center; justify-content: center;
+          transition: background 0.2s;
+          backdrop-filter: blur(6px);
+        }
+        .glb-btn:hover { background: rgba(255,255,255,0.25); }
+        #glb-prev { left: 1.2rem; }
+        #glb-next { right: 1.2rem; }
+        #glb-close {
+          position: fixed; top: 1rem; right: 1rem;
+          background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25);
+          color: #fff; font-size: 1.1rem; width: 2.4rem; height: 2.4rem;
+          border-radius: 50%; cursor: pointer; z-index: 10001;
+          display: flex; align-items: center; justify-content: center;
+          backdrop-filter: blur(6px); transition: background 0.2s;
+        }
+        #glb-close:hover { background: rgba(220,38,38,0.7); }
+        #glb-counter {
+          position: fixed; top: 1.1rem; left: 50%; transform: translateX(-50%);
+          color: rgba(255,255,255,0.6); font-size: 0.82rem; letter-spacing: 1px;
+          background: rgba(255,255,255,0.08); padding: 0.25rem 0.9rem;
+          border-radius: 999px; backdrop-filter: blur(4px);
+          z-index: 10001;
+        }
+        @media (max-width: 768px) {
+          .g-grid { grid-template-columns: repeat(2,1fr); }
+          .g-item.featured { grid-column: span 2; grid-row: span 1; }
+          .g-item.featured img { min-height: 260px; }
+          .g-item.wide { grid-column: span 2; }
+          .g-item:not(.featured):not(.wide) img { height: 160px; }
+          .g-item.wide img { height: 180px; }
+        }
+        @media (max-width: 480px) {
+          .g-grid { grid-template-columns: 1fr; }
+          .g-item.featured, .g-item.wide { grid-column: span 1; }
+        }
+      </style>
+
+      <!-- Lightbox -->
+      <div id="glb" onclick="closeLb()">
+        <button class="glb-btn" id="glb-prev" onclick="shiftLb(-1,event)">&#8249;</button>
+        <div id="glb-wrap" onclick="event.stopPropagation()">
+          <img id="glb-img" src="" alt="">
+          <p id="glb-caption"></p>
         </div>
-        <div class="gallery-item" style="overflow: hidden; border-radius: 4px; cursor: zoom-in; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" onclick="openLightbox(1)">
-          <img src="assets/images/gallery/photo-2.jpeg" alt="Gallery Photo 2" loading="lazy"
-               style="width: 100%; height: 200px; object-fit: cover; transition: transform 0.4s ease; display: block;"
-               onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
-        </div>
-        <div class="gallery-item" style="overflow: hidden; border-radius: 4px; cursor: zoom-in; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" onclick="openLightbox(2)">
-          <img src="assets/images/gallery/photo-3.jpeg" alt="Gallery Photo 3" loading="lazy"
-               style="width: 100%; height: 200px; object-fit: cover; transition: transform 0.4s ease; display: block;"
-               onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
-        </div>
-        <div class="gallery-item" style="overflow: hidden; border-radius: 4px; cursor: zoom-in; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" onclick="openLightbox(3)">
-          <img src="assets/images/gallery/photo-4.jpeg" alt="Gallery Photo 4" loading="lazy"
-               style="width: 100%; height: 200px; object-fit: cover; transition: transform 0.4s ease; display: block;"
-               onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
-        </div>
-        <div class="gallery-item" style="overflow: hidden; border-radius: 4px; cursor: zoom-in; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" onclick="openLightbox(4)">
-          <img src="assets/images/gallery/photo-5.jpeg" alt="Gallery Photo 5" loading="lazy"
-               style="width: 100%; height: 200px; object-fit: cover; transition: transform 0.4s ease; display: block;"
-               onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
-        </div>
-        <div class="gallery-item" style="overflow: hidden; border-radius: 4px; cursor: zoom-in; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" onclick="openLightbox(5)">
-          <img src="assets/images/gallery/photo-6.jpeg" alt="Gallery Photo 6" loading="lazy"
-               style="width: 100%; height: 200px; object-fit: cover; transition: transform 0.4s ease; display: block;"
-               onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
-        </div>
-        <div class="gallery-item" style="overflow: hidden; border-radius: 4px; cursor: zoom-in; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" onclick="openLightbox(6)">
-          <img src="assets/images/gallery/photo-7.jpeg" alt="Gallery Photo 7" loading="lazy"
-               style="width: 100%; height: 200px; object-fit: cover; transition: transform 0.4s ease; display: block;"
-               onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
-        </div>
-        <div class="gallery-item" style="overflow: hidden; border-radius: 4px; cursor: zoom-in; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" onclick="openLightbox(7)">
-          <img src="assets/images/gallery/photo-8.jpeg" alt="Gallery Photo 8" loading="lazy"
-               style="width: 100%; height: 200px; object-fit: cover; transition: transform 0.4s ease; display: block;"
-               onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
-        </div>
-        <div class="gallery-item" style="overflow: hidden; border-radius: 4px; cursor: zoom-in; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" onclick="openLightbox(8)">
-          <img src="assets/images/gallery/photo-9.jpeg" alt="Gallery Photo 9" loading="lazy"
-               style="width: 100%; height: 200px; object-fit: cover; transition: transform 0.4s ease; display: block;"
-               onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
-        </div>
+        <button class="glb-btn" id="glb-next" onclick="shiftLb(1,event)">&#8250;</button>
+        <button id="glb-close" onclick="closeLb()">✕</button>
+        <div id="glb-counter"></div>
       </div>
+
+      <!-- Professional Gallery Grid -->
+      <div class="g-grid">
+
+        <!-- Photo 1 — Hero / Featured Portrait -->
+        <div class="g-item featured" onclick="openLb(0)">
+          <img src="assets/images/gallery/photo-1.jpeg" alt="Tuyishime Honore – Professional Portrait" loading="lazy">
+          <div class="g-overlay">
+            <span class="g-badge" style="background: rgba(16,185,129,0.3); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.4);">
+              <i class="fa-solid fa-star"></i> Featured
+            </span>
+            <p class="g-title">Tuyishime Honore</p>
+            <p class="g-sub">Educator · ICT Innovator · Theologian</p>
+          </div>
+          <div class="g-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+
+        <!-- Photo 2 — PBC Certificate Award -->
+        <div class="g-item" onclick="openLb(1)">
+          <img src="assets/images/gallery/photo-2.jpeg" alt="PBC Certificate Award Ceremony" loading="lazy">
+          <div class="g-overlay">
+            <span class="g-badge" style="background: rgba(234,179,8,0.25); color: #fde68a; border: 1px solid rgba(234,179,8,0.4);">
+              <i class="fa-solid fa-graduation-cap"></i> Graduation
+            </span>
+            <p class="g-title">Certificate Award Ceremony</p>
+            <p class="g-sub">Promise Bible Centre (PBC) — Theology</p>
+          </div>
+          <div class="g-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+
+        <!-- Photo 3 — Class Photo PBC -->
+        <div class="g-item" onclick="openLb(2)">
+          <img src="assets/images/gallery/photo-3.jpeg" alt="PBC Graduation Class Group Photo" loading="lazy">
+          <div class="g-overlay">
+            <span class="g-badge" style="background: rgba(234,179,8,0.25); color: #fde68a; border: 1px solid rgba(234,179,8,0.4);">
+              <i class="fa-solid fa-users"></i> Cohort
+            </span>
+            <p class="g-title">PBC Graduation Class</p>
+            <p class="g-sub">Promise Bible Centre — Graduating Cohort</p>
+          </div>
+          <div class="g-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+
+        <!-- Photo 4 — Personal Ceremony Moment -->
+        <div class="g-item" onclick="openLb(3)">
+          <img src="assets/images/gallery/photo-4.jpeg" alt="Honore in Graduation Gown" loading="lazy">
+          <div class="g-overlay">
+            <span class="g-badge" style="background: rgba(99,102,241,0.3); color: #c7d2fe; border: 1px solid rgba(99,102,241,0.4);">
+              <i class="fa-solid fa-certificate"></i> Academic
+            </span>
+            <p class="g-title">Graduation Day</p>
+            <p class="g-sub">PBC Theology Programme</p>
+          </div>
+          <div class="g-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+
+        <!-- Photo 5 — Wide: Full Congregation Celebration -->
+        <div class="g-item wide" onclick="openLb(4)">
+          <img src="assets/images/gallery/photo-5.jpeg" alt="PBC Graduation Full Hall Celebration" loading="lazy">
+          <div class="g-overlay">
+            <span class="g-badge" style="background: rgba(234,179,8,0.25); color: #fde68a; border: 1px solid rgba(234,179,8,0.4);">
+              <i class="fa-solid fa-trophy"></i> Milestone
+            </span>
+            <p class="g-title">PBC Graduation Celebration</p>
+            <p class="g-sub">Full graduating cohort — Promise Bible Centre</p>
+          </div>
+          <div class="g-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+
+        <!-- Photo 6 — Hat Toss Celebration -->
+        <div class="g-item" onclick="openLb(5)">
+          <img src="assets/images/gallery/photo-6.jpeg" alt="Graduation Hat Toss Celebration" loading="lazy">
+          <div class="g-overlay">
+            <span class="g-badge" style="background: rgba(239,68,68,0.25); color: #fca5a5; border: 1px solid rgba(239,68,68,0.35);">
+              <i class="fa-solid fa-star"></i> Celebration
+            </span>
+            <p class="g-title">Hats in the Air!</p>
+            <p class="g-sub">Graduation joy — PBC Class</p>
+          </div>
+          <div class="g-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+
+        <!-- Photo 7 — Wide: PBC Group with Certificates -->
+        <div class="g-item wide" onclick="openLb(6)">
+          <img src="assets/images/gallery/photo-7.jpeg" alt="PBC Group Holding Certificates" loading="lazy">
+          <div class="g-overlay">
+            <span class="g-badge" style="background: rgba(234,179,8,0.25); color: #fde68a; border: 1px solid rgba(234,179,8,0.4);">
+              <i class="fa-solid fa-scroll"></i> Certificates
+            </span>
+            <p class="g-title">Graduates with Certificates</p>
+            <p class="g-sub">Promise Bible Centre — Theology Cohort</p>
+          </div>
+          <div class="g-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+
+        <!-- Photo 8 — Certificate Presentation -->
+        <div class="g-item" onclick="openLb(7)">
+          <img src="assets/images/gallery/photo-8.jpeg" alt="Certificate Presentation — PBC" loading="lazy">
+          <div class="g-overlay">
+            <span class="g-badge" style="background: rgba(16,185,129,0.25); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.4);">
+              <i class="fa-solid fa-award"></i> Award
+            </span>
+            <p class="g-title">Certificate Presentation</p>
+            <p class="g-sub">Promise Bible Centre — Faculty & Graduates</p>
+          </div>
+          <div class="g-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+
+        <!-- Photo 9 — Family Moment -->
+        <div class="g-item" onclick="openLb(8)">
+          <img src="assets/images/gallery/photo-9.jpeg" alt="Honore with Family after Graduation" loading="lazy">
+          <div class="g-overlay">
+            <span class="g-badge" style="background: rgba(244,114,182,0.25); color: #fbcfe8; border: 1px solid rgba(244,114,182,0.4);">
+              <i class="fa-solid fa-heart"></i> Family
+            </span>
+            <p class="g-title">A Moment with Family</p>
+            <p class="g-sub">PBC Graduation Day — Dove Hotel, Kigali</p>
+          </div>
+          <div class="g-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+
+      </div><!-- /.g-grid -->
     </section>
 
     <script>
-      const galleryImgs = [
-        'assets/images/gallery/photo-1.jpeg',
-        'assets/images/gallery/photo-2.jpeg',
-        'assets/images/gallery/photo-3.jpeg',
-        'assets/images/gallery/photo-4.jpeg',
-        'assets/images/gallery/photo-5.jpeg',
-        'assets/images/gallery/photo-6.jpeg',
-        'assets/images/gallery/photo-7.jpeg',
-        'assets/images/gallery/photo-8.jpeg',
-        'assets/images/gallery/photo-9.jpeg',
+      const glbData = [
+        { src: 'assets/images/gallery/photo-1.jpeg', cap: 'Tuyishime Honore — Professional Portrait' },
+        { src: 'assets/images/gallery/photo-2.jpeg', cap: 'Certificate Award Ceremony — Promise Bible Centre (PBC)' },
+        { src: 'assets/images/gallery/photo-3.jpeg', cap: 'PBC Graduating Cohort — Class Photo' },
+        { src: 'assets/images/gallery/photo-4.jpeg', cap: 'Graduation Day — PBC Theology Programme' },
+        { src: 'assets/images/gallery/photo-5.jpeg', cap: 'Full Graduation Celebration — Promise Bible Centre' },
+        { src: 'assets/images/gallery/photo-6.jpeg', cap: 'Hats in the Air! — PBC Graduation Celebration' },
+        { src: 'assets/images/gallery/photo-7.jpeg', cap: 'Graduates Holding Certificates — PBC Theology Cohort' },
+        { src: 'assets/images/gallery/photo-8.jpeg', cap: 'Certificate Presentation — Faculty & Graduates, PBC' },
+        { src: 'assets/images/gallery/photo-9.jpeg', cap: 'A Moment with Family — Graduation Day, Dove Hotel Kigali' },
       ];
-      let currentLightboxIdx = 0;
-      function openLightbox(idx) {
-        currentLightboxIdx = idx;
-        const lb = document.getElementById('gallery-lightbox');
-        document.getElementById('lightbox-img').src = galleryImgs[idx];
+      let glbIdx = 0;
+      function openLb(i) {
+        glbIdx = i;
+        const lb = document.getElementById('glb');
+        document.getElementById('glb-img').src = glbData[i].src;
+        document.getElementById('glb-caption').textContent = glbData[i].cap;
+        document.getElementById('glb-counter').textContent = (i + 1) + ' / ' + glbData.length;
         lb.style.display = 'flex';
         document.body.style.overflow = 'hidden';
       }
-      function closeLightbox() {
-        document.getElementById('gallery-lightbox').style.display = 'none';
+      function closeLb() {
+        document.getElementById('glb').style.display = 'none';
         document.body.style.overflow = '';
       }
-      function shiftLightbox(dir) {
-        currentLightboxIdx = (currentLightboxIdx + dir + galleryImgs.length) % galleryImgs.length;
-        document.getElementById('lightbox-img').src = galleryImgs[currentLightboxIdx];
-        event.stopPropagation();
+      function shiftLb(dir, e) {
+        if (e) e.stopPropagation();
+        glbIdx = (glbIdx + dir + glbData.length) % glbData.length;
+        document.getElementById('glb-img').src = glbData[glbIdx].src;
+        document.getElementById('glb-caption').textContent = glbData[glbIdx].cap;
+        document.getElementById('glb-counter').textContent = (glbIdx + 1) + ' / ' + glbData.length;
       }
       document.addEventListener('keydown', (e) => {
-        const lb = document.getElementById('gallery-lightbox');
+        const lb = document.getElementById('glb');
         if (lb.style.display === 'flex') {
-          if (e.key === 'ArrowRight') shiftLightbox(1);
-          if (e.key === 'ArrowLeft')  shiftLightbox(-1);
-          if (e.key === 'Escape')      closeLightbox();
+          if (e.key === 'ArrowRight') shiftLb(1);
+          if (e.key === 'ArrowLeft')  shiftLb(-1);
+          if (e.key === 'Escape')      closeLb();
         }
       });
     </script>
 
   </main>
+
 
   <footer class="site-footer">
     <div class="container">
