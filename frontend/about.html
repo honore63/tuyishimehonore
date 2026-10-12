@@ -212,6 +212,141 @@
         </div>
       </div>
     </section>
+
+    <!-- ============ GALLERY SUB-NAV ============ -->
+    <nav class="sub-nav" aria-label="About sub-navigation" style="
+        position: sticky; top: var(--header-height); z-index: 900;
+        background: rgba(4,55,42,0.97); backdrop-filter: blur(10px);
+        display: flex; gap: 0; justify-content: center; border-bottom: 2px solid var(--green-medium);
+        padding: 0.5rem 0; margin: 3rem 0 0;">
+      <a href="#about-title" style="color: #a7f3d0; font-weight: 600; font-size: 0.95rem; padding: 0.5rem 1.5rem; border-radius: 0; transition: background 0.2s; text-decoration: none;"
+         onmouseover="this.style.background='rgba(16,185,129,0.15)'" onmouseout="this.style.background='transparent'">
+        <i class="fa-solid fa-user"></i> About
+      </a>
+      <a href="#gallery" style="color: #67e8f9; font-weight: 700; font-size: 0.95rem; padding: 0.5rem 1.5rem; background: rgba(103,232,249,0.1); border-bottom: 3px solid #67e8f9; text-decoration: none;"
+         onmouseover="this.style.background='rgba(103,232,249,0.2)'" onmouseout="this.style.background='rgba(103,232,249,0.1)'">
+        <i class="fa-solid fa-images"></i> Gallery
+      </a>
+    </nav>
+
+    <!-- ============ GALLERY SECTION ============ -->
+    <section id="gallery" class="section" aria-labelledby="gallery-title" style="padding-top: 4rem;">
+      <h2 id="gallery-title" class="section-title">📸 Gallery</h2>
+      <p class="section-subtitle">A glimpse into my professional life, classroom moments, and community engagements.</p>
+
+      <!-- Lightbox overlay -->
+      <div id="gallery-lightbox" onclick="closeLightbox()" style="
+          display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92);
+          z-index: 10000; align-items: center; justify-content: center; cursor: zoom-out;">
+        <button onclick="shiftLightbox(-1)" style="position: fixed; left: 1rem; top: 50%; transform: translateY(-50%);
+            background: rgba(255,255,255,0.15); border: none; color: #fff; font-size: 2rem;
+            width: 3rem; height: 3rem; border-radius: 50%; cursor: pointer; z-index: 10001;">&#8249;</button>
+        <img id="lightbox-img" src="" alt="" style="max-width: 90vw; max-height: 88vh; border-radius: 4px; box-shadow: 0 20px 60px rgba(0,0,0,0.8); object-fit: contain;" onclick="event.stopPropagation()">
+        <button onclick="shiftLightbox(1)" style="position: fixed; right: 1rem; top: 50%; transform: translateY(-50%);
+            background: rgba(255,255,255,0.15); border: none; color: #fff; font-size: 2rem;
+            width: 3rem; height: 3rem; border-radius: 50%; cursor: pointer; z-index: 10001;">&#8250;</button>
+        <button onclick="closeLightbox()" style="position: fixed; top: 1rem; right: 1rem;
+            background: rgba(255,255,255,0.15); border: none; color: #fff; font-size: 1.4rem;
+            width: 2.5rem; height: 2.5rem; border-radius: 50%; cursor: pointer; z-index: 10001;">✕</button>
+      </div>
+
+      <!-- Gallery grid -->
+      <div class="gallery-grid" style="
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+          gap: 1rem; margin-top: 2rem;">
+        <div class="gallery-item" style="grid-column: span 2; grid-row: span 2; position: relative; overflow: hidden; border-radius: 4px; cursor: zoom-in; box-shadow: 0 8px 24px rgba(0,0,0,0.15);"
+             onclick="openLightbox(0)">
+          <img src="assets/images/gallery/photo-1.jpeg" alt="Honore Professional Photo" loading="lazy"
+               style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; display: block;"
+               onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+          <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(4,55,42,0.5) 0%, transparent 60%);"></div>
+          <div style="position: absolute; bottom: 0.8rem; left: 0.8rem; color: #fff; font-size: 0.8rem; font-weight: 700; text-shadow: 0 1px 4px rgba(0,0,0,0.8);">
+            <i class="fa-solid fa-camera"></i> Featured
+          </div>
+        </div>
+        <div class="gallery-item" style="overflow: hidden; border-radius: 4px; cursor: zoom-in; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" onclick="openLightbox(1)">
+          <img src="assets/images/gallery/photo-2.jpeg" alt="Gallery Photo 2" loading="lazy"
+               style="width: 100%; height: 200px; object-fit: cover; transition: transform 0.4s ease; display: block;"
+               onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+        </div>
+        <div class="gallery-item" style="overflow: hidden; border-radius: 4px; cursor: zoom-in; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" onclick="openLightbox(2)">
+          <img src="assets/images/gallery/photo-3.jpeg" alt="Gallery Photo 3" loading="lazy"
+               style="width: 100%; height: 200px; object-fit: cover; transition: transform 0.4s ease; display: block;"
+               onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+        </div>
+        <div class="gallery-item" style="overflow: hidden; border-radius: 4px; cursor: zoom-in; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" onclick="openLightbox(3)">
+          <img src="assets/images/gallery/photo-4.jpeg" alt="Gallery Photo 4" loading="lazy"
+               style="width: 100%; height: 200px; object-fit: cover; transition: transform 0.4s ease; display: block;"
+               onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+        </div>
+        <div class="gallery-item" style="overflow: hidden; border-radius: 4px; cursor: zoom-in; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" onclick="openLightbox(4)">
+          <img src="assets/images/gallery/photo-5.jpeg" alt="Gallery Photo 5" loading="lazy"
+               style="width: 100%; height: 200px; object-fit: cover; transition: transform 0.4s ease; display: block;"
+               onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+        </div>
+        <div class="gallery-item" style="overflow: hidden; border-radius: 4px; cursor: zoom-in; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" onclick="openLightbox(5)">
+          <img src="assets/images/gallery/photo-6.jpeg" alt="Gallery Photo 6" loading="lazy"
+               style="width: 100%; height: 200px; object-fit: cover; transition: transform 0.4s ease; display: block;"
+               onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+        </div>
+        <div class="gallery-item" style="overflow: hidden; border-radius: 4px; cursor: zoom-in; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" onclick="openLightbox(6)">
+          <img src="assets/images/gallery/photo-7.jpeg" alt="Gallery Photo 7" loading="lazy"
+               style="width: 100%; height: 200px; object-fit: cover; transition: transform 0.4s ease; display: block;"
+               onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+        </div>
+        <div class="gallery-item" style="overflow: hidden; border-radius: 4px; cursor: zoom-in; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" onclick="openLightbox(7)">
+          <img src="assets/images/gallery/photo-8.jpeg" alt="Gallery Photo 8" loading="lazy"
+               style="width: 100%; height: 200px; object-fit: cover; transition: transform 0.4s ease; display: block;"
+               onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+        </div>
+        <div class="gallery-item" style="overflow: hidden; border-radius: 4px; cursor: zoom-in; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" onclick="openLightbox(8)">
+          <img src="assets/images/gallery/photo-9.jpeg" alt="Gallery Photo 9" loading="lazy"
+               style="width: 100%; height: 200px; object-fit: cover; transition: transform 0.4s ease; display: block;"
+               onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+        </div>
+      </div>
+    </section>
+
+    <script>
+      const galleryImgs = [
+        'assets/images/gallery/photo-1.jpeg',
+        'assets/images/gallery/photo-2.jpeg',
+        'assets/images/gallery/photo-3.jpeg',
+        'assets/images/gallery/photo-4.jpeg',
+        'assets/images/gallery/photo-5.jpeg',
+        'assets/images/gallery/photo-6.jpeg',
+        'assets/images/gallery/photo-7.jpeg',
+        'assets/images/gallery/photo-8.jpeg',
+        'assets/images/gallery/photo-9.jpeg',
+      ];
+      let currentLightboxIdx = 0;
+      function openLightbox(idx) {
+        currentLightboxIdx = idx;
+        const lb = document.getElementById('gallery-lightbox');
+        document.getElementById('lightbox-img').src = galleryImgs[idx];
+        lb.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+      function closeLightbox() {
+        document.getElementById('gallery-lightbox').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+      function shiftLightbox(dir) {
+        currentLightboxIdx = (currentLightboxIdx + dir + galleryImgs.length) % galleryImgs.length;
+        document.getElementById('lightbox-img').src = galleryImgs[currentLightboxIdx];
+        event.stopPropagation();
+      }
+      document.addEventListener('keydown', (e) => {
+        const lb = document.getElementById('gallery-lightbox');
+        if (lb.style.display === 'flex') {
+          if (e.key === 'ArrowRight') shiftLightbox(1);
+          if (e.key === 'ArrowLeft')  shiftLightbox(-1);
+          if (e.key === 'Escape')      closeLightbox();
+        }
+      });
+    </script>
+
   </main>
 
   <footer class="site-footer">
